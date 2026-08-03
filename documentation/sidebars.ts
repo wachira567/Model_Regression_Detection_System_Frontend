@@ -7,6 +7,7 @@ const sidebars: SidebarsConfig = {
       label: 'Business Guide',
       items: [
         'business/intro',
+        'business/the-story',
         'business/reading-reports',
         'business/adding-cases',
       ],
