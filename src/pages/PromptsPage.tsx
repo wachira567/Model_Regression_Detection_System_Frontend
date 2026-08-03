@@ -4,13 +4,11 @@ import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
 import { FileTerminal, Plus } from "lucide-react";
-import api from "@/lib/api";
-
 interface PromptConfig {
   id: string;
   feature_id: string;
-  version: str;
-  model: str;
+  version: string;
+  model: string;
   is_active: boolean;
   created_at: string;
 }
