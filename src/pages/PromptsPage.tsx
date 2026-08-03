@@ -3,7 +3,10 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { FileTerminal, Plus } from "lucide-react";
+import { FileTerminal, Plus, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { api } from "../lib/api";
+import { Pagination } from "@/components/Pagination";
 interface PromptConfig {
   id: string;
   feature_id: string;
@@ -15,15 +18,29 @@ interface PromptConfig {
 
 export default function PromptsPage() {
   const [prompts, setPrompts] = useState<PromptConfig[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    // In a real app, this would fetch from /api/v1/prompts
-    // For now we mock it to show the UI
-    setPrompts([
-      { id: "1", feature_id: "email_classifier", version: "1.0.0", model: "gpt-4o-mini", is_active: true, created_at: "2026-08-01T12:00:00Z" },
-      { id: "2", feature_id: "email_classifier", version: "0.9.0", model: "gpt-3.5-turbo", is_active: false, created_at: "2026-07-15T10:00:00Z" }
-    ]);
-  }, []);
+    loadPrompts();
+  }, [page, search]);
+
+  const loadPrompts = async () => {
+    try {
+      setLoading(true);
+      const data = await api.getPrompts(page, 10, search);
+      setPrompts(data.items);
+      setPages(data.pages);
+      setTotal(data.total);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -39,13 +56,25 @@ export default function PromptsPage() {
       </div>
 
       <Card className="border-slate-200">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-lg flex items-center gap-2 m-0">
             <FileTerminal className="h-5 w-5 text-blue-600" />
             Active Prompts
           </CardTitle>
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <Input 
+              placeholder="Search prompts..." 
+              className="pl-9 h-9"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -78,6 +107,12 @@ export default function PromptsPage() {
               ))}
             </TableBody>
           </Table>
+          <Pagination 
+            page={page} 
+            pages={pages} 
+            total={total} 
+            onPageChange={setPage} 
+          />
         </CardContent>
       </Card>
     </div>

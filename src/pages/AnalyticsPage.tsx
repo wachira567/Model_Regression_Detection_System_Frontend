@@ -2,22 +2,27 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from "recharts";
 import { Activity, TrendingUp } from "lucide-react";
+import { api } from "../lib/api";
 
 export default function AnalyticsPage() {
   const [data, setData] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Mock analytics data
-    setData([
-      { name: "Mon", accuracy: 95, latency: 120 },
-      { name: "Tue", accuracy: 94, latency: 125 },
-      { name: "Wed", accuracy: 96, latency: 118 },
-      { name: "Thu", accuracy: 92, latency: 140 }, // Simulated regression
-      { name: "Fri", accuracy: 95, latency: 122 },
-      { name: "Sat", accuracy: 97, latency: 115 },
-      { name: "Sun", accuracy: 96, latency: 119 },
-    ]);
+    loadTrends();
   }, []);
+
+  const loadTrends = async () => {
+    try {
+      setLoading(true);
+      const trends = await api.getAnalyticsTrends(7); // Last 7 days
+      setData(trends);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -36,15 +41,21 @@ export default function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                  <YAxis domain={[80, 100]} axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                  <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0' }} />
-                  <Line type="monotone" dataKey="accuracy" stroke="#10b981" strokeWidth={3} dot={{r: 4}} activeDot={{r: 6}} />
-                </LineChart>
-              </ResponsiveContainer>
+              {loading ? (
+                <div className="flex items-center justify-center h-full text-slate-500">Loading data...</div>
+              ) : data.length === 0 ? (
+                <div className="flex items-center justify-center h-full text-slate-500">No data available for the last 7 days.</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
+                    <YAxis domain={[0, 100]} axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
+                    <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0' }} />
+                    <Line type="monotone" dataKey="accuracy" stroke="#10b981" strokeWidth={3} dot={{r: 4}} activeDot={{r: 6}} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
           </CardContent>
         </Card>
@@ -58,15 +69,21 @@ export default function AnalyticsPage() {
           </CardHeader>
           <CardContent>
             <div className="h-[300px]">
-              <ResponsiveContainer width="100%" height="100%">
-                <LineChart data={data}>
-                  <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
-                  <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                  <YAxis domain={[100, 150]} axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
-                  <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0' }} />
-                  <Line type="monotone" dataKey="latency" stroke="#6366f1" strokeWidth={3} dot={{r: 4}} activeDot={{r: 6}} />
-                </LineChart>
-              </ResponsiveContainer>
+              {loading ? (
+                <div className="flex items-center justify-center h-full text-slate-500">Loading data...</div>
+              ) : data.length === 0 ? (
+                <div className="flex items-center justify-center h-full text-slate-500">No data available for the last 7 days.</div>
+              ) : (
+                <ResponsiveContainer width="100%" height="100%">
+                  <LineChart data={data}>
+                    <CartesianGrid strokeDasharray="3 3" vertical={false} stroke="#e2e8f0" />
+                    <XAxis dataKey="name" axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
+                    <YAxis domain={['auto', 'auto']} axisLine={false} tickLine={false} tick={{fill: '#64748b'}} />
+                    <Tooltip contentStyle={{ borderRadius: '8px', border: '1px solid #e2e8f0' }} />
+                    <Line type="monotone" dataKey="latency" stroke="#6366f1" strokeWidth={3} dot={{r: 4}} activeDot={{r: 6}} />
+                  </LineChart>
+                </ResponsiveContainer>
+              )}
             </div>
           </CardContent>
         </Card>

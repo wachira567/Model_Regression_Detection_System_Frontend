@@ -32,8 +32,10 @@ export const setupApiAuth = (getToken: () => Promise<string | null> | string | n
 setupApiAuth(() => localStorage.getItem('access_token'));
 
 export const api = {
-  getEvalRuns: async (limit: number = 20) => {
-    const response = await apiClient.get(`/eval-runs?limit=${limit}`);
+  getEvalRuns: async (page: number = 1, size: number = 10, search?: string) => {
+    const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
+    if (search) params.append("search", search);
+    const response = await apiClient.get(`/eval-runs?${params.toString()}`);
     return response.data;
   },
   getEvalRun: async (runId: string) => {
@@ -50,6 +52,22 @@ export const api = {
   },
   triggerEvalRun: async (featureId: string) => {
     const response = await apiClient.post(`/eval/run/${featureId}`);
+    return response.data;
+  },
+  getPrompts: async (page: number = 1, size: number = 10, search?: string) => {
+    const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
+    if (search) params.append("search", search);
+    const response = await apiClient.get(`/prompts?${params.toString()}`);
+    return response.data;
+  },
+  getDatasets: async (page: number = 1, size: number = 10, search?: string) => {
+    const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
+    if (search) params.append("search", search);
+    const response = await apiClient.get(`/datasets?${params.toString()}`);
+    return response.data;
+  },
+  getAnalyticsTrends: async (days: number = 7) => {
+    const response = await apiClient.get(`/reports/analytics/trends?days=${days}`);
     return response.data;
   }
 };

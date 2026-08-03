@@ -4,20 +4,30 @@ import { api } from "../lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { ArrowRight, Play, CheckCircle2, XCircle, Clock } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { ArrowRight, Play, CheckCircle2, XCircle, Clock, Search } from "lucide-react";
+import { Pagination } from "@/components/Pagination";
 export default function EvalRunsPage() {
   const [runs, setRuns] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [triggering, setTriggering] = useState(false);
+  
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
     loadRuns();
-  }, []);
+  }, [page, search]);
 
   const loadRuns = async () => {
     try {
-      const data = await api.getEvalRuns();
-      setRuns(data);
+      setLoading(true);
+      const data = await api.getEvalRuns(page, 10, search);
+      setRuns(data.items);
+      setPages(data.pages);
+      setTotal(data.total);
     } catch (e) {
       console.error(e);
     } finally {
@@ -54,8 +64,20 @@ export default function EvalRunsPage() {
 
 
       <Card className="shadow-sm border-slate-200 overflow-hidden">
-        <CardHeader className="bg-slate-50/50 border-b border-slate-100">
-          <CardTitle className="text-lg">Recent Eval Runs</CardTitle>
+        <CardHeader className="bg-slate-50/50 border-b border-slate-100 flex flex-row items-center justify-between py-3">
+          <CardTitle className="text-lg m-0">Recent Eval Runs</CardTitle>
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <Input 
+              placeholder="Search runs..." 
+              className="pl-9 h-9"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1); // Reset to page 1 on search
+              }}
+            />
+          </div>
         </CardHeader>
         <CardContent className="p-0">
           <div className="divide-y divide-slate-100">
@@ -115,6 +137,12 @@ export default function EvalRunsPage() {
               ))
             )}
           </div>
+          <Pagination 
+            page={page} 
+            pages={pages} 
+            total={total} 
+            onPageChange={setPage} 
+          />
         </CardContent>
       </Card>
     </div>

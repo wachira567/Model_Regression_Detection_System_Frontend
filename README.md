@@ -1,32 +1,57 @@
-# React + TypeScript + Vite
+# Model Regression Detection System (MRDS) - Frontend
 
-This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+This is the React frontend for the Model Regression Detection System (MRDS). It provides an enterprise-grade dashboard to manage LLM Prompts, Golden Datasets, Evaluation Runs, and Analytics.
 
-Currently, two official plugins are available:
+## Tech Stack
+- **Framework:** React 18 with Vite
+- **Language:** TypeScript
+- **Styling:** TailwindCSS (Corporate Slate & Indigo themes)
+- **Routing:** React Router v6
+- **Data Visualization:** Recharts
+- **Icons:** Lucide React
+- **Product Tour:** React Joyride
+- **Authentication:** Google OAuth (`@react-oauth/google`) + Email OTP (Resend Fallback)
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+## Key Features
 
-## React Compiler
+### 1. Enterprise Dashboards
+- **Eval Runs:** Monitor LLM evaluation runs dynamically. Features server-side pagination and real-time text filtering.
+- **Analytics:** Visualize rolling accuracy and latency trends dynamically loaded from the PostgreSQL analytics engine.
+- **Golden Datasets:** Manage JSON-based test cases for your regressions tests.
+- **Prompt Configurations:** View active and archived prompt configurations.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+### 2. Super Admin & RBAC
+- Built-in multi-tenant organization support.
+- Secure, protected `/admin` route exclusively for users with the `is_superadmin` database flag.
+- Manage users and elevate roles natively from the UI.
 
-## Expanding the Oxlint configuration
+### 3. Server-Side Pagination
+All tables across the application utilize a global `<Pagination />` component that communicates directly with the FastAPI backend, utilizing SQL `OFFSET` and `LIMIT` clauses rather than client-side rendering.
 
-If you are developing a production application, we recommend enabling type-aware lint rules by installing `oxlint-tsgolint` and editing `.oxlintrc.json`:
+### 4. Interactive Product Tour
+First-time users are greeted with an interactive product tour built on `react-joyride` that walks them through the core functionalities.
 
-```json
-{
-  "$schema": "./node_modules/oxlint/configuration_schema.json",
-  "plugins": ["react", "typescript", "oxc"],
-  "options": {
-    "typeAware": true
-  },
-  "rules": {
-    "react/rules-of-hooks": "error",
-    "react/only-export-components": ["warn", { "allowConstantExport": true }]
-  }
-}
-```
+## Local Development Setup
 
-See the [Oxlint rules documentation](https://oxc.rs/docs/guide/usage/linter/rules) for the full list of rules and categories.
+1. **Install Dependencies**
+   ```bash
+   npm install
+   ```
+
+2. **Environment Variables**
+   Create a `.env` file in the root of the `frontend` directory:
+   ```env
+   VITE_API_BASE_URL="http://localhost:8000/api/v1"
+   VITE_GOOGLE_CLIENT_ID="your-google-oauth-client-id"
+   ```
+
+3. **Start the Development Server**
+   ```bash
+   npm run dev
+   ```
+   The application will be available at `http://localhost:5173`.
+
+4. **Build for Production**
+   ```bash
+   npm run build
+   ```

@@ -2,16 +2,36 @@ import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Database, Plus } from "lucide-react";
+import { Database, Plus, Search } from "lucide-react";
+import { Input } from "@/components/ui/input";
+import { api } from "../lib/api";
+import { Pagination } from "@/components/Pagination";
 
 export default function DatasetsPage() {
   const [datasets, setDatasets] = useState<any[]>([]);
+  const [loading, setLoading] = useState(true);
+  const [page, setPage] = useState(1);
+  const [pages, setPages] = useState(1);
+  const [total, setTotal] = useState(0);
+  const [search, setSearch] = useState("");
 
   useEffect(() => {
-    setDatasets([
-      { id: "ds_1", name: "email_classifier_golden", version: "1.0.0", cases: 100, created_at: "2026-08-01T12:00:00Z" }
-    ]);
-  }, []);
+    loadDatasets();
+  }, [page, search]);
+
+  const loadDatasets = async () => {
+    try {
+      setLoading(true);
+      const data = await api.getDatasets(page, 10, search);
+      setDatasets(data.items);
+      setPages(data.pages);
+      setTotal(data.total);
+    } catch (e) {
+      console.error(e);
+    } finally {
+      setLoading(false);
+    }
+  };
 
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
@@ -27,13 +47,25 @@ export default function DatasetsPage() {
       </div>
 
       <Card className="border-slate-200">
-        <CardHeader>
-          <CardTitle className="text-lg flex items-center gap-2">
+        <CardHeader className="flex flex-row items-center justify-between">
+          <CardTitle className="text-lg flex items-center gap-2 m-0">
             <Database className="h-5 w-5 text-indigo-600" />
             Available Datasets
           </CardTitle>
+          <div className="relative w-64">
+            <Search className="absolute left-3 top-2.5 h-4 w-4 text-slate-400" />
+            <Input 
+              placeholder="Search datasets..." 
+              className="pl-9 h-9"
+              value={search}
+              onChange={(e) => {
+                setSearch(e.target.value);
+                setPage(1);
+              }}
+            />
+          </div>
         </CardHeader>
-        <CardContent>
+        <CardContent className="p-0">
           <Table>
             <TableHeader>
               <TableRow>
@@ -58,6 +90,12 @@ export default function DatasetsPage() {
               ))}
             </TableBody>
           </Table>
+          <Pagination 
+            page={page} 
+            pages={pages} 
+            total={total} 
+            onPageChange={setPage} 
+          />
         </CardContent>
       </Card>
     </div>
