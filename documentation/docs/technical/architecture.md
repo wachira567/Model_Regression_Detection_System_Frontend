@@ -2,42 +2,86 @@
 sidebar_position: 1
 ---
 
-# Architecture
+# Architecture & Systems Design
 
-The Model Regression Detection System is a decoupled, async-native pipeline designed for high concurrency and robust failure handling.
+The Model Regression Detection System (MRDS) is an async-native Python microservice paired with a React Single Page Application (SPA). It is explicitly designed to handle high-concurrency evaluation workloads without triggering third-party API rate limits.
 
-## Component Overview
+---
 
-1. **Trigger Layer:**
-   - **GitHub Webhooks:** Listens for `pull_request` events targeting specific paths (e.g., `prompts/`).
-   - **Manual Triggers:** Executed via the React frontend.
-2. **FastAPI Backend (Core):**
-   - **API Routers:** Input validation via Pydantic.
-   - **EvalEngine:** Orchestrates the evaluation pipeline.
-   - **LLMRunner:** Highly concurrent `asyncio.Semaphore` based runner for executing against external LLMs without hitting rate limits.
-   - **JudgeScorer:** Uses a powerful model (e.g., GPT-4o) to evaluate the outputs of a weaker/cheaper model (e.g., GPT-4o-mini).
-   - **DiffEngine:** Compares current run metrics against baseline runs to calculate deltas.
-3. **Data Layer (PostgreSQL):**
-   - Uses `asyncpg` for non-blocking I/O.
-   - Leverages `JSONB` to store flexible input/output schemas while maintaining strict relational integrity via UUID primary keys.
+## 🏗 System Components
 
-## Sequence Diagram
+### 1. The FastAPI Backend (Core Engine)
+Built on FastAPI for maximum asynchronous performance.
+- **`EvalEngine`**: The orchestration layer. It receives a webhook, fetches the correct Golden Dataset from PostgreSQL, and constructs the batch of evaluation tasks.
+- **`LLMRunner` (The Throttle)**: Because we might throw 5,000 test cases at OpenAI simultaneously, we wrap our outbound HTTP requests in an `asyncio.Semaphore`. This creates a bounded concurrency pool (e.g., 50 parallel requests), ensuring we never get `429 Too Many Requests` errors from our model providers.
+- **`JudgeScorer`**: Implements the "LLM-as-a-Judge" pattern. It takes the output of the target model and feeds it to a superior model (like GPT-4) along with a grading rubric to determine a Relevance Score.
+
+### 2. The Data Layer (PostgreSQL)
+We leverage PostgreSQL with `asyncpg` for non-blocking I/O.
+
+```mermaid
+erDiagram
+    EvalRun {
+        uuid id PK
+        string status "pending, completed, failed"
+        float accuracy "Percentage"
+        float relevance "Score 0-5"
+        int latency_ms 
+        timestamp created_at
+    }
+    Dataset {
+        uuid id PK
+        string name "e.g., email_classifier_golden"
+        jsonb cases "Array of inputs/expected outputs"
+    }
+    TestCaseResult {
+        uuid id PK
+        uuid run_id FK
+        jsonb input
+        jsonb expected_output
+        jsonb actual_output
+        boolean passed
+        string judge_reasoning
+    }
+    
+    EvalRun ||--o{ TestCaseResult : contains
+    Dataset ||--o{ EvalRun : evaluates
+```
+
+### 3. The React Frontend
+A Vite-based SPA using TailwindCSS and Shadcn UI components. It communicates with the backend exclusively via RESTful APIs authenticated with HMAC/API Keys.
+
+---
+
+## 🔄 The Evaluation Lifecycle
 
 ```mermaid
 sequenceDiagram
-    participant PR as GitHub PR
-    participant API as FastAPI
+    autonumber
+    participant GitHub as GitHub Actions
+    participant API as FastAPI Router
     participant EE as EvalEngine
-    participant LLM as External LLM
     participant DB as PostgreSQL
+    participant LLM as External LLM API
 
-    PR->>API: Webhook (push to prompts/)
-    API->>EE: trigger_eval_run()
-    EE->>DB: create_run(status=pending)
-    EE->>DB: fetch_golden_dataset()
-    EE->>LLM: Concurrent evaluation (Semaphore limit: 10)
-    LLM-->>EE: Results
-    EE->>EE: JudgeScorer scoring
-    EE->>DB: update_run(status=completed, metrics)
-    API-->>PR: Post GitHub Comment with Results
+    GitHub->>API: POST /webhook/pr (Webhook Trigger)
+    API->>EE: trigger_run(dataset_id)
+    EE->>DB: create_run(status='pending')
+    EE->>DB: fetch_golden_dataset(dataset_id)
+    
+    rect rgb(15, 23, 42)
+        Note over EE, LLM: Concurrent Execution Pool (Semaphore)
+        EE->>LLM: execute_prompt(case_1)
+        EE->>LLM: execute_prompt(case_2)
+        LLM-->>EE: result_1
+        LLM-->>EE: result_2
+    end
+    
+    EE->>EE: JudgeScorer(results)
+    EE->>DB: update_run(metrics, status='completed')
+    API-->>GitHub: Post PR Comment with Markdown Diff
 ```
+
+:::tip Why a Semaphore over a Queue?
+We chose an `asyncio.Semaphore` over a dedicated message broker (like RabbitMQ or Celery) to keep the system decoupled and easily deployable via Docker, avoiding the infrastructure overhead of managing external workers.
+:::

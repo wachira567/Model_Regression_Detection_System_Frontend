@@ -43,19 +43,41 @@
   --ifm-hero-background-color: #1e293b;
 }
 
-/* Overrides for specific components */
-.navbar__brand {
-  font-weight: 700;
-  letter-spacing: -0.02em;
+/* Advanced Corporate Polish */
+.navbar {
+  box-shadow: 0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1);
+  background-color: rgba(15, 23, 42, 0.95);
+  backdrop-filter: blur(8px);
 }
 
 .hero {
   border-bottom: 1px solid var(--ifm-color-emphasis-200);
+  background: linear-gradient(180deg, #f8fafc 0%, #f1f5f9 100%);
+  padding: 6rem 0;
+}
+
+[data-theme='dark'] .hero {
+  background: linear-gradient(180deg, #1e293b 0%, #0f172a 100%);
 }
 
 .button--primary {
   background-color: var(--ifm-color-primary);
   border-color: var(--ifm-color-primary);
-  border-radius: 6px;
+  border-radius: 8px;
   font-weight: 600;
+  box-shadow: 0 4px 6px -1px rgba(16, 185, 129, 0.2);
+  transition: all 0.2s ease;
+}
+
+.button--primary:hover {
+  transform: translateY(-1px);
+  box-shadow: 0 6px 8px -1px rgba(16, 185, 129, 0.3);
+}
+
+/* Beautiful Alert Boxes (Admonitions) */
+.theme-admonition {
+  border-radius: 8px;
+  border: 1px solid var(--ifm-color-emphasis-200);
+  box-shadow: 0 1px 3px 0 rgb(0 0 0 / 0.1);
+  margin-bottom: 1.5rem;
 }
