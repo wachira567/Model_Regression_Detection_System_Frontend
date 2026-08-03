@@ -12,6 +12,25 @@ export const apiClient = axios.create({
   },
 });
 
+let interceptorId: number | null = null;
+
+export const setupApiAuth = (getToken: () => Promise<string | null> | string | null) => {
+  if (interceptorId !== null) {
+    apiClient.interceptors.request.eject(interceptorId);
+  }
+  
+  interceptorId = apiClient.interceptors.request.use(async (config) => {
+    const token = await getToken();
+    if (token) {
+      config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+  });
+};
+
+// Initialize auth interceptor to read from localStorage by default
+setupApiAuth(() => localStorage.getItem('access_token'));
+
 export const api = {
   getEvalRuns: async (limit: number = 20) => {
     const response = await apiClient.get(`/eval-runs?limit=${limit}`);
