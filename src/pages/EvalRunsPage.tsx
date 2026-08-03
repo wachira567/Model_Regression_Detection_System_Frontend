@@ -45,7 +45,7 @@ export default function EvalRunsPage() {
           <h1 className="text-3xl font-bold tracking-tight">Eval Runs</h1>
           <p className="text-slate-500 mt-2">View all your historical evaluation runs and manually trigger new ones.</p>
         </div>
-        <Button onClick={handleTriggerRun} disabled={triggering} className="gap-2 bg-blue-600 hover:bg-blue-700 text-white">
+        <Button onClick={handleTriggerRun} disabled={triggering} className="gap-2 bg-emerald-600 hover:bg-emerald-700 text-white">
           <Play className="h-4 w-4" />
           {triggering ? "Starting..." : "Run Eval (Email Classifier)"}
         </Button>
