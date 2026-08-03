@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
-import Joyride, { CallBackProps, STATUS, Step } from 'react-joyride';
+import { Joyride, STATUS } from 'react-joyride';
+import type { Step } from 'react-joyride';
 
 export default function TourGuide() {
   const [run, setRun] = useState(false);
@@ -10,7 +11,6 @@ export default function TourGuide() {
       placement: 'center',
       title: 'Welcome to MRDS! 👋',
       content: 'This is the Model Regression Detection System. Let us show you around!',
-      disableBeacon: true,
     },
     {
       target: 'a[href="/prompts"]',
@@ -46,7 +46,7 @@ export default function TourGuide() {
     }
   }, []);
 
-  const handleJoyrideCallback = (data: CallBackProps) => {
+  const handleJoyrideCallback = (data: any) => {
     const { status } = data;
     const finishedStatuses: string[] = [STATUS.FINISHED, STATUS.SKIPPED];
 
@@ -61,21 +61,12 @@ export default function TourGuide() {
       steps={steps}
       run={run}
       continuous={true}
-      showSkipButton={true}
-      showProgress={true}
-      callback={handleJoyrideCallback}
+      onEvent={handleJoyrideCallback}
       styles={{
-        options: {
-          primaryColor: '#4f46e5', // indigo-600
-          textColor: '#334155', // slate-700
-          backgroundColor: '#ffffff',
-          overlayColor: 'rgba(15, 23, 42, 0.6)', // slate-900 with opacity
-          zIndex: 1000,
-        },
         tooltipContainer: {
           textAlign: 'left',
         },
-        buttonNext: {
+        buttonPrimary: {
           backgroundColor: '#4f46e5',
           borderRadius: '6px',
         },

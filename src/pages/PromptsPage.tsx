@@ -18,7 +18,7 @@ interface PromptConfig {
 
 export default function PromptsPage() {
   const [prompts, setPrompts] = useState<PromptConfig[]>([]);
-  const [loading, setLoading] = useState(true);
+  const [_loading, setLoading] = useState(true);
   const [page, setPage] = useState(1);
   const [pages, setPages] = useState(1);
   const [total, setTotal] = useState(0);
