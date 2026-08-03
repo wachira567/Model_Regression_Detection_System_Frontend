@@ -1,12 +1,14 @@
-import { BrowserRouter, Routes, Route, Link, Navigate } from "react-router-dom";
+import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { LayoutDashboard, FileTerminal, Activity, Database, LogOut } from "lucide-react";
+import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck } from "lucide-react";
 import EvalRunsPage from "./pages/EvalRunsPage";
 import EvalRunDetailPage from "./pages/EvalRunDetailPage";
 import PromptsPage from "./pages/PromptsPage";
 import DatasetsPage from "./pages/DatasetsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
+import AdminDashboardPage from "./pages/AdminDashboardPage";
+import TourGuide from "./components/TourGuide";
 
 import LoginPage from "./pages/LoginPage";
 
@@ -22,7 +24,9 @@ function ProtectedRoute({ children }: { children: JSX.Element }) {
 }
 
 function MainLayout({ children }: { children: React.ReactNode }) {
-  const { logout } = useAuth();
+  const { logout, isSuperadmin } = useAuth();
+  const location = useLocation();
+
   return (
     <div className="min-h-screen bg-slate-50 flex flex-col">
       {/* Navbar */}
@@ -51,6 +55,12 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               <Database className="h-4 w-4" />
               <span>Datasets</span>
             </Link>
+            {isSuperadmin && (
+              <Link to="/admin" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/admin') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
+                <ShieldCheck className="h-4 w-4" />
+                <span>Admin</span>
+              </Link>
+            )}
           </nav>
           <div className="flex items-center space-x-4">
             <button 
@@ -65,9 +75,12 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </header>
 
       {/* Main Content */}
-      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+      <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8 relative">
         {children}
       </main>
+      
+      {/* Product Tour */}
+      <TourGuide />
     </div>
   );
 }
@@ -87,6 +100,7 @@ function App() {
                     <Route path="/analytics" element={<AnalyticsPage />} />
                     <Route path="/prompts" element={<PromptsPage />} />
                     <Route path="/datasets" element={<DatasetsPage />} />
+                    <Route path="/admin" element={<AdminDashboardPage />} />
                     <Route path="/eval-runs/:runId" element={<EvalRunDetailPage />} />
                   </Routes>
                 </MainLayout>
