@@ -1,8 +1,10 @@
 import { BrowserRouter, Routes, Route, Link } from "react-router-dom";
-import { LayoutDashboard, FileTerminal, Activity } from "lucide-react";
-import DashboardPage from "./pages/DashboardPage";
+import { LayoutDashboard, FileTerminal, Activity, Database } from "lucide-react";
+import EvalRunsPage from "./pages/EvalRunsPage";
 import EvalRunDetailPage from "./pages/EvalRunDetailPage";
 import PromptsPage from "./pages/PromptsPage";
+import DatasetsPage from "./pages/DatasetsPage";
+import AnalyticsPage from "./pages/AnalyticsPage";
 
 function App() {
   return (
@@ -18,11 +20,19 @@ function App() {
             <nav className="flex space-x-6">
               <Link to="/" className="text-slate-600 hover:text-slate-900 font-medium flex items-center space-x-2 transition-colors">
                 <LayoutDashboard className="h-4 w-4" />
-                <span>Dashboard</span>
+                <span>Eval Runs</span>
+              </Link>
+              <Link to="/analytics" className="text-slate-600 hover:text-slate-900 font-medium flex items-center space-x-2 transition-colors">
+                <Activity className="h-4 w-4" />
+                <span>Analytics</span>
               </Link>
               <Link to="/prompts" className="text-slate-600 hover:text-slate-900 font-medium flex items-center space-x-2 transition-colors">
                 <FileTerminal className="h-4 w-4" />
                 <span>Prompts</span>
+              </Link>
+              <Link to="/datasets" className="text-slate-600 hover:text-slate-900 font-medium flex items-center space-x-2 transition-colors">
+                <Database className="h-4 w-4" />
+                <span>Datasets</span>
               </Link>
             </nav>
           </div>
@@ -31,8 +41,10 @@ function App() {
         {/* Main Content */}
         <main className="flex-1 w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
           <Routes>
-            <Route path="/" element={<DashboardPage />} />
+            <Route path="/" element={<EvalRunsPage />} />
+            <Route path="/analytics" element={<AnalyticsPage />} />
             <Route path="/prompts" element={<PromptsPage />} />
+            <Route path="/datasets" element={<DatasetsPage />} />
             <Route path="/eval-runs/:runId" element={<EvalRunDetailPage />} />
           </Routes>
         </main>

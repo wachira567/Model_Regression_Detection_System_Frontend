@@ -5,9 +5,7 @@ import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
 import { ArrowRight, Play, CheckCircle2, XCircle, Clock } from "lucide-react";
-import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer } from 'recharts';
-
-export default function DashboardPage() {
+export default function EvalRunsPage() {
   const [runs, setRuns] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);
   const [triggering, setTriggering] = useState(false);
@@ -40,18 +38,12 @@ export default function DashboardPage() {
     }
   };
 
-  const chartData = runs.slice(0, 10).reverse().map(r => ({
-    name: r.id.substring(0, 4),
-    accuracy: (r.overall_accuracy || 0) * 100,
-    latency: r.avg_latency_ms || 0
-  }));
-
   return (
     <div className="space-y-8 animate-in fade-in duration-500">
       <div className="flex items-center justify-between">
         <div>
-          <h1 className="text-3xl font-bold tracking-tight">Dashboard</h1>
-          <p className="text-slate-500 mt-2">Monitor model performance and detect regressions over time.</p>
+          <h1 className="text-3xl font-bold tracking-tight">Eval Runs</h1>
+          <p className="text-slate-500 mt-2">View all your historical evaluation runs and manually trigger new ones.</p>
         </div>
         <Button onClick={handleTriggerRun} disabled={triggering} className="gap-2 bg-blue-600 hover:bg-blue-700 text-white">
           <Play className="h-4 w-4" />
@@ -59,41 +51,7 @@ export default function DashboardPage() {
         </Button>
       </div>
 
-      <div className="grid gap-6 md:grid-cols-2">
-        <Card className="shadow-sm border-slate-200">
-          <CardHeader>
-            <CardTitle className="text-lg text-slate-700">Accuracy Trend</CardTitle>
-          </CardHeader>
-          <CardContent className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} domain={[0, 100]} />
-                <Tooltip cursor={{fill: '#f1f5f9'}} />
-                <Bar dataKey="accuracy" fill="#3b82f6" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-        
-        <Card className="shadow-sm border-slate-200">
-          <CardHeader>
-            <CardTitle className="text-lg text-slate-700">Latency Trend (ms)</CardTitle>
-          </CardHeader>
-          <CardContent className="h-72">
-            <ResponsiveContainer width="100%" height="100%">
-              <BarChart data={chartData}>
-                <CartesianGrid strokeDasharray="3 3" vertical={false} />
-                <XAxis dataKey="name" axisLine={false} tickLine={false} />
-                <YAxis axisLine={false} tickLine={false} />
-                <Tooltip cursor={{fill: '#f1f5f9'}} />
-                <Bar dataKey="latency" fill="#8b5cf6" radius={[4, 4, 0, 0]} />
-              </BarChart>
-            </ResponsiveContainer>
-          </CardContent>
-        </Card>
-      </div>
+
 
       <Card className="shadow-sm border-slate-200 overflow-hidden">
         <CardHeader className="bg-slate-50/50 border-b border-slate-100">
