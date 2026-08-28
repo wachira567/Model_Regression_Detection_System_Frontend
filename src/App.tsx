@@ -230,7 +230,9 @@ function App() {
   return (
     <GoogleOAuthProvider clientId={GOOGLE_CLIENT_ID}>
       <AuthProvider>
-        <BrowserRouter>
+        <TourProvider>
+          <TourOverlay />
+          <BrowserRouter>
           <Routes>
             {/* Public Marketing Routes */}
             <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
@@ -279,6 +281,7 @@ function App() {
             } />
           </Routes>
         </BrowserRouter>
+        </TourProvider>
       </AuthProvider>
     </GoogleOAuthProvider>
   );

@@ -1,4 +1,4 @@
-import { TourStep } from '../contexts/TourContext';
+import type { TourStep } from '../contexts/TourContext';
 
 export const USER_DASHBOARD_STEPS: TourStep[] = [
   {
