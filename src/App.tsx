@@ -1,7 +1,10 @@
 import { BrowserRouter, Routes, Route, Link, Navigate, useLocation } from "react-router-dom";
 import { GoogleOAuthProvider } from '@react-oauth/google';
 import { AuthProvider, useAuth } from './contexts/AuthContext';
-import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck, Menu, X } from "lucide-react";
+import { TourProvider, useTour } from './contexts/TourContext';
+import TourOverlay from './components/TourOverlay';
+import { USER_DASHBOARD_STEPS } from './lib/tourConfig';
+import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck, Menu, X, Sparkles } from "lucide-react";
 import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -53,6 +56,7 @@ function ProtectedRoute({ children }: { children: React.ReactElement }) {
 function MainLayout({ children }: { children: React.ReactNode }) {
   const { logout, isSuperadmin } = useAuth();
   const location = useLocation();
+  const { startTour } = useTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
   const navItems = [
@@ -84,15 +88,24 @@ function MainLayout({ children }: { children: React.ReactNode }) {
         </Link>
       </div>
       
-      <div className="px-6 mb-4">
+      <div className="px-6 mb-4" data-tour="workspace-selector">
         <select className="w-full h-10 px-3 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
           <option>Default Workspace</option>
           <option>Create New Project...</option>
         </select>
       </div>
       
-      <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest px-4 mb-4">Menu</div>
+      <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto" data-tour="sidebar-nav">
+        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest px-4 mb-4 flex justify-between items-center">
+          <span>Menu</span>
+          <button 
+            data-tour="tour-trigger"
+            onClick={() => startTour(USER_DASHBOARD_STEPS, 'user-dashboard')}
+            className="flex items-center gap-1 text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors"
+          >
+            <Sparkles className="w-3 h-3" /> Tour
+          </button>
+        </div>
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.path === '/dashboard' 

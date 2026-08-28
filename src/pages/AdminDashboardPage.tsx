@@ -14,6 +14,8 @@ import {
 import { Badge } from '../components/ui/badge';
 import axios from 'axios';
 import { api } from '../lib/api';
+import { useTour } from '../contexts/TourContext';
+import { ADMIN_DASHBOARD_STEPS } from '../lib/tourConfig';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
@@ -28,6 +30,7 @@ interface User {
 
 export default function AdminDashboardPage() {
   const { isSuperadmin } = useAuth();
+  const { startTour } = useTour();
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
@@ -84,9 +87,15 @@ export default function AdminDashboardPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Admin Control Center</h1>
           <p className="text-slate-500 mt-2 text-lg">Manage global platform access and organizational settings.</p>
         </div>
+        <Button 
+          onClick={() => startTour(ADMIN_DASHBOARD_STEPS, 'admin-dashboard')}
+          className="bg-indigo-600 hover:bg-indigo-700 text-white rounded-full font-bold px-6 shadow-sm flex items-center gap-2"
+        >
+          <Zap className="w-4 h-4" /> Start Tour
+        </Button>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6" data-tour="admin-stats">
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
           <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Users className="w-8 h-8" />
@@ -129,7 +138,7 @@ export default function AdminDashboardPage() {
       </div>
 
 
-      <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
+      <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden" data-tour="admin-orgs">
         <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50">
           <h2 className="text-xl font-bold text-slate-900 flex items-center gap-3">
             <div className="p-2 bg-indigo-100 rounded-lg">
