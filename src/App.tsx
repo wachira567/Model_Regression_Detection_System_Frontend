@@ -11,6 +11,8 @@ import PromptsPage from "./pages/PromptsPage";
 import DatasetsPage from "./pages/DatasetsPage";
 import AnalyticsPage from "./pages/AnalyticsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
+import ExperimentsPage from "./pages/ExperimentsPage";
+import ExperimentDetailPage from "./pages/ExperimentDetailPage";
 import TourGuide from "./components/TourGuide";
 
 // Public Pages
@@ -40,6 +42,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
 
   const navItems = [
     { name: 'Eval Runs', path: '/dashboard', icon: LayoutDashboard },
+    { name: 'Experiments', path: '/dashboard/experiments', icon: Activity },
     { name: 'Analytics', path: '/dashboard/analytics', icon: Activity },
     { name: 'Prompts', path: '/dashboard/prompts', icon: FileTerminal },
     { name: 'Datasets', path: '/dashboard/datasets', icon: Database },
@@ -191,6 +194,8 @@ function App() {
                 <MainLayout>
                   <Routes>
                     <Route path="/" element={<EvalRunsPage />} />
+                    <Route path="/experiments" element={<ExperimentsPage />} />
+                    <Route path="/experiments/:id" element={<ExperimentDetailPage />} />
                     <Route path="/analytics" element={<AnalyticsPage />} />
                     <Route path="/prompts" element={<PromptsPage />} />
                     <Route path="/datasets" element={<DatasetsPage />} />

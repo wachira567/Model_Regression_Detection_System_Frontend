@@ -1,9 +1,10 @@
 import { useState, useEffect } from "react";
+import { Link } from "react-router-dom";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { FileTerminal, Plus, Search, Sparkles } from "lucide-react";
+import { FileTerminal, Plus, Search, Sparkles, FlaskConical } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { api } from "../lib/api";
 import { Pagination } from "@/components/Pagination";
@@ -50,10 +51,18 @@ export default function PromptsPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Prompt Configurations</h1>
           <p className="text-slate-500 mt-2 text-lg">Manage versions of your LLM prompts and models across features.</p>
         </div>
-        <Button className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
-          <Plus className="h-5 w-5" />
-          New Prompt
-        </Button>
+        <div className="flex gap-3 w-full sm:w-auto">
+          <Button variant="outline" asChild className="gap-2 h-12 px-6 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl font-bold transition-all w-full sm:w-auto">
+            <Link to="/dashboard/experiments/new">
+              <FlaskConical className="h-5 w-5 text-indigo-600" />
+              New A/B Test
+            </Link>
+          </Button>
+          <Button className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+            <Plus className="h-5 w-5" />
+            New Prompt
+          </Button>
+        </div>
       </div>
 
       <Card className="border-none shadow-sm bg-white overflow-hidden rounded-3xl">
