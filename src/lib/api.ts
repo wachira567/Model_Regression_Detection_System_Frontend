@@ -125,5 +125,15 @@ export const api = {
   deleteProject: async (id: string) => {
     const response = await apiClient.delete(`/projects/${id}`);
     return response.data;
+  },
+  
+  // Users
+  getUserProfile: async () => {
+    const response = await apiClient.get(`/users/me`);
+    return response.data;
+  },
+  updateUserProfile: async (name: string) => {
+    const response = await apiClient.put(`/users/me`, { name });
+    return response.data;
   }
 };
