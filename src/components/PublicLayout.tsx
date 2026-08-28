@@ -135,13 +135,10 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <span className="font-bold text-xl tracking-tight text-slate-900">MRDS</span>
               </Link>
               <p className="text-slate-500 text-sm mb-6 max-w-xs">
-                The ultimate safety net for generative AI. Catch regressions before they reach your users.
+                An open-source portfolio project exploring the architecture of AI evaluation and observability.
               </p>
               <div className="flex items-center gap-4">
-                {/* Social icons placeholders */}
-                <div className="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer"></div>
-                <div className="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer"></div>
-                <div className="w-8 h-8 rounded-full bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer"></div>
+                <a href="https://github.com/wachira567/Model_Regression_Detection_System_Frontend" target="_blank" rel="noreferrer" className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer text-slate-600 font-bold">GH</a>
               </div>
             </div>
             
@@ -149,19 +146,18 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <h4 className="font-semibold text-slate-900 mb-4">Product</h4>
               <ul className="space-y-3 text-sm text-slate-500">
                 <li><Link to="/features" className="hover:text-indigo-600 transition-colors">Features</Link></li>
-                <li><Link to="/how-it-works" className="hover:text-indigo-600 transition-colors">How it works</Link></li>
-                <li><Link to="/pricing" className="hover:text-indigo-600 transition-colors">Pricing</Link></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Changelog</a></li>
+                <li><Link to="/how-it-works" className="hover:text-indigo-600 transition-colors">Architecture</Link></li>
+                <li><Link to="/pricing" className="hover:text-indigo-600 transition-colors">Open Access</Link></li>
+                <li><a href="https://github.com/wachira567" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">GitHub</a></li>
               </ul>
             </div>
             
             <div>
               <h4 className="font-semibold text-slate-900 mb-4">Resources</h4>
               <ul className="space-y-3 text-sm text-slate-500">
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Documentation</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">API Reference</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Blog</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Community</a></li>
+                <li><Link to="/docs" className="hover:text-indigo-600 transition-colors">Documentation</Link></li>
+                <li><Link to="/docs/api" className="hover:text-indigo-600 transition-colors">API Reference</Link></li>
+                <li><Link to="/docs/architecture" className="hover:text-indigo-600 transition-colors">System Design</Link></li>
               </ul>
             </div>
             
@@ -177,7 +173,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           </div>
           
           <div className="pt-8 border-t border-slate-200 flex flex-col md:flex-row justify-between items-center gap-4 text-sm text-slate-500">
-            <div>&copy; {new Date().getFullYear()} MRDS Enterprise. All rights reserved.</div>
+            <div>&copy; {new Date().getFullYear()} MRDS Open Source Project.</div>
             <div className="flex items-center gap-2">
               <span className="relative flex h-2 w-2">
                 <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>

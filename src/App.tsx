@@ -30,6 +30,13 @@ import AuthPage from "./pages/AuthPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import AboutPage from "./pages/AboutPage";
 
+// Docs Pages
+import DocsLayout from "./pages/docs/DocsLayout";
+import Introduction from "./pages/docs/Introduction";
+import Architecture from "./pages/docs/Architecture";
+import Features from "./pages/docs/Features";
+import ApiReference from "./pages/docs/ApiReference";
+
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 // Protected Route Wrapper
@@ -207,6 +214,14 @@ function App() {
             {/* Auth Routes */}
             <Route path="/login" element={<AuthPage />} />
             <Route path="/accept-invite" element={<AcceptInvitePage />} />
+            
+            {/* Documentation Routes */}
+            <Route path="/docs" element={<DocsLayout />}>
+              <Route index element={<Introduction />} />
+              <Route path="architecture" element={<Architecture />} />
+              <Route path="features" element={<Features />} />
+              <Route path="api" element={<ApiReference />} />
+            </Route>
             
             {/* Authenticated Dashboard Routes */}
             <Route path="/dashboard/*" element={
