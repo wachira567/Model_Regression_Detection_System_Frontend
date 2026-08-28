@@ -10,7 +10,12 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import TourGuide from "./components/TourGuide";
 
-import LandingPage from "./pages/LandingPage";
+// Public Pages
+import PublicLayout from "./components/PublicLayout";
+import HomePage from "./pages/HomePage";
+import FeaturesPage from "./pages/FeaturesPage";
+import PricingPage from "./pages/PricingPage";
+import AuthPage from "./pages/AuthPage";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -33,30 +38,30 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       <header className="bg-slate-900 shadow-sm border-b border-slate-800">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-4 flex justify-between items-center">
           <div className="flex items-center space-x-3">
-            <div className="bg-emerald-500 p-2 rounded-lg">
+            <Link to="/" className="bg-emerald-500 p-2 rounded-lg hover:bg-emerald-400 transition-colors">
               <LayoutDashboard className="h-6 w-6 text-slate-900" />
-            </div>
+            </Link>
             <h1 className="text-xl font-bold text-white tracking-tight">MRDS</h1>
           </div>
           <nav className="flex space-x-6">
-            <Link to="/" className="text-slate-300 hover:text-emerald-400 font-medium flex items-center space-x-2 transition-colors">
+            <Link to="/dashboard" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname === '/dashboard' ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
               <LayoutDashboard className="h-4 w-4" />
               <span>Eval Runs</span>
             </Link>
-            <Link to="/analytics" className="text-slate-300 hover:text-emerald-400 font-medium flex items-center space-x-2 transition-colors">
+            <Link to="/dashboard/analytics" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/dashboard/analytics') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
               <Activity className="h-4 w-4" />
               <span>Analytics</span>
             </Link>
-            <Link to="/prompts" className="text-slate-300 hover:text-emerald-400 font-medium flex items-center space-x-2 transition-colors">
+            <Link to="/dashboard/prompts" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/dashboard/prompts') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
               <FileTerminal className="h-4 w-4" />
               <span>Prompts</span>
             </Link>
-            <Link to="/datasets" className="text-slate-300 hover:text-emerald-400 font-medium flex items-center space-x-2 transition-colors">
+            <Link to="/dashboard/datasets" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/dashboard/datasets') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
               <Database className="h-4 w-4" />
               <span>Datasets</span>
             </Link>
             {isSuperadmin && (
-              <Link to="/admin" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/admin') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
+              <Link to="/dashboard/admin" className={`font-medium flex items-center space-x-2 transition-colors ${location.pathname.startsWith('/dashboard/admin') ? 'text-emerald-400' : 'text-slate-300 hover:text-emerald-400'}`}>
                 <ShieldCheck className="h-4 w-4" />
                 <span>Admin</span>
               </Link>
@@ -91,8 +96,16 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LandingPage />} />
-            <Route path="/*" element={
+            {/* Public Marketing Routes */}
+            <Route path="/" element={<PublicLayout><HomePage /></PublicLayout>} />
+            <Route path="/features" element={<PublicLayout><FeaturesPage /></PublicLayout>} />
+            <Route path="/pricing" element={<PublicLayout><PricingPage /></PublicLayout>} />
+            
+            {/* Auth Routes */}
+            <Route path="/login" element={<AuthPage />} />
+            
+            {/* Authenticated Dashboard Routes */}
+            <Route path="/dashboard/*" element={
               <ProtectedRoute>
                 <MainLayout>
                   <Routes>
@@ -114,3 +127,4 @@ function App() {
 }
 
 export default App;
+
