@@ -6,7 +6,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   const location = useLocation();
   const navigate = useNavigate();
 
-  const isHome = location.pathname === '/';
   const isFeatures = location.pathname === '/features';
   const isPricing = location.pathname === '/pricing';
 
