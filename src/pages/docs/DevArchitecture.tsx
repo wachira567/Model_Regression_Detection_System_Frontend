@@ -1,5 +1,5 @@
 import { FadeInOnScroll } from '../../lib/AnimationUtils';
-import { Database, Server, Layout, ArrowRight } from 'lucide-react';
+import { Database, Server, Layout } from 'lucide-react';
 
 export default function DevArchitecture() {
   return (

@@ -1,5 +1,5 @@
 import { FadeInOnScroll } from '../../lib/AnimationUtils';
-import { Webhook, TerminalSquare } from 'lucide-react';
+import { Webhook } from 'lucide-react';
 
 export default function DevApiReference() {
   return (

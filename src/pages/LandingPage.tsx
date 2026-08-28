@@ -2,10 +2,10 @@ import { useState } from 'react';
 import { GoogleLogin } from '@react-oauth/google';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
-import { Activity, Mail, KeyRound, Loader2, ArrowRight, ShieldCheck, Zap, Database, BarChart3, Lock, Code2 } from 'lucide-react';
+import { Activity, Mail, KeyRound, Loader2, ArrowRight, ShieldCheck, Zap, Database, Code2 } from 'lucide-react';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
-import { motion, useScroll, useTransform } from 'framer-motion';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";

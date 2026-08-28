@@ -1,5 +1,5 @@
 import { Outlet, Link, useLocation } from 'react-router-dom';
-import { Book, Code, Component, Activity, ArrowLeft, Play, Database, ShieldAlert, Zap } from 'lucide-react';
+import { Book, Code, Component, ArrowLeft, Play, Database, Zap } from 'lucide-react';
 
 export default function DocsLayout() {
   const location = useLocation();
@@ -10,7 +10,7 @@ export default function DocsLayout() {
     { name: 'Running Evaluations', path: '/docs/evaluations', icon: <Play className="w-4 h-4" /> },
   ];
 
-  const devNavItems = [
+  const devNavItems: { name: string, path: string, icon: React.ReactNode, exact?: boolean }[] = [
     { name: 'Design Decisions', path: '/docs/design', icon: <Zap className="w-4 h-4" /> },
     { name: 'System Architecture', path: '/docs/architecture', icon: <Component className="w-4 h-4" /> },
     { name: 'API Reference', path: '/docs/api', icon: <Code className="w-4 h-4" /> },

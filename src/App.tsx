@@ -5,7 +5,7 @@ import { TourProvider, useTour } from './contexts/TourContext';
 import TourOverlay from './components/TourOverlay';
 import { USER_DASHBOARD_STEPS } from './lib/tourConfig';
 import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck, Menu, X, Sparkles } from "lucide-react";
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
 import EvalRunsPage from "./pages/EvalRunsPage";
@@ -32,6 +32,8 @@ import PricingPage from "./pages/PricingPage";
 import AuthPage from "./pages/AuthPage";
 import HowItWorksPage from "./pages/HowItWorksPage";
 import AboutPage from "./pages/AboutPage";
+import PrivacyPage from "./pages/PrivacyPage";
+import TermsPage from "./pages/TermsPage";
 
 // Docs Pages
 import DocsLayout from "./pages/docs/DocsLayout";
@@ -56,8 +58,19 @@ function ProtectedRoute({ children }: { children: React.ReactElement }) {
 function MainLayout({ children }: { children: React.ReactNode }) {
   const { logout, isSuperadmin } = useAuth();
   const location = useLocation();
-  const { startTour } = useTour();
+  const { startTour, autoStartTour } = useTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+
+  useEffect(() => {
+    // Only try to auto-start if we are strictly on a user dashboard page, not admin.
+    if (!location.pathname.startsWith('/dashboard/admin')) {
+      // Small timeout to let elements render
+      const timer = setTimeout(() => {
+        autoStartTour(USER_DASHBOARD_STEPS, 'user-dashboard');
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [autoStartTour, location.pathname]);
 
   const navItems = [
     { name: 'Eval Runs', path: '/dashboard', icon: LayoutDashboard },
@@ -225,6 +238,8 @@ function App() {
             <Route path="/pricing" element={<PublicLayout><PricingPage /></PublicLayout>} />
             <Route path="/how-it-works" element={<PublicLayout><HowItWorksPage /></PublicLayout>} />
             <Route path="/about" element={<PublicLayout><AboutPage /></PublicLayout>} />
+            <Route path="/privacy" element={<PublicLayout><PrivacyPage /></PublicLayout>} />
+            <Route path="/terms" element={<PublicLayout><TermsPage /></PublicLayout>} />
             
             {/* Auth Routes */}
             <Route path="/login" element={<AuthPage />} />

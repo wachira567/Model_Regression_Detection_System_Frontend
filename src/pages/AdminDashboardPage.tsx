@@ -30,11 +30,20 @@ interface User {
 
 export default function AdminDashboardPage() {
   const { isSuperadmin } = useAuth();
-  const { startTour } = useTour();
+  const { startTour, autoStartTour } = useTour();
   const [users, setUsers] = useState<User[]>([]);
   const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
+
+  useEffect(() => {
+    if (isSuperadmin) {
+      const timer = setTimeout(() => {
+        autoStartTour(ADMIN_DASHBOARD_STEPS, 'admin-dashboard');
+      }, 500);
+      return () => clearTimeout(timer);
+    }
+  }, [isSuperadmin, autoStartTour]);
 
   const fetchData = async () => {
     try {

@@ -12,6 +12,7 @@ interface TourContextType {
   currentStepIndex: number;
   steps: TourStep[];
   startTour: (steps: TourStep[], tourId: string) => void;
+  autoStartTour: (steps: TourStep[], tourId: string) => void;
   nextStep: () => void;
   prevStep: () => void;
   endTour: () => void;
@@ -26,19 +27,19 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   const [tourId, setTourId] = useState<string>('');
 
   const startTour = useCallback((newSteps: TourStep[], id: string) => {
-    // Only start if they haven't seen it, or if manually triggered
-    const hasSeen = localStorage.getItem(`has_seen_tour_${id}`);
-    
-    // We will let the caller decide if it should force start, but for now we just start it.
-    // If they want to auto-start, they check local storage first.
     setSteps(newSteps);
     setCurrentStepIndex(0);
     setTourId(id);
     setIsActive(true);
-    
-    // Lock scroll on body
     document.body.style.overflow = 'hidden';
   }, []);
+
+  const autoStartTour = useCallback((newSteps: TourStep[], id: string) => {
+    const hasSeen = localStorage.getItem(`has_seen_tour_${id}`);
+    if (!hasSeen) {
+      startTour(newSteps, id);
+    }
+  }, [startTour]);
 
   const endTour = useCallback(() => {
     setIsActive(false);
@@ -74,7 +75,7 @@ export function TourProvider({ children }: { children: React.ReactNode }) {
   }, [isActive, endTour]);
 
   return (
-    <TourContext.Provider value={{ isActive, currentStepIndex, steps, startTour, nextStep, prevStep, endTour }}>
+    <TourContext.Provider value={{ isActive, currentStepIndex, steps, startTour, autoStartTour, nextStep, prevStep, endTour }}>
       {children}
     </TourContext.Provider>
   );

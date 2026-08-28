@@ -140,9 +140,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <p className="text-slate-500 text-sm mb-6 max-w-xs">
                 An open-source portfolio project exploring the architecture of AI evaluation and observability.
               </p>
-              <div className="flex items-center gap-4">
-                <a href="https://github.com/wachira567/Model_Regression_Detection_System_Frontend" target="_blank" rel="noreferrer" className="w-8 h-8 flex items-center justify-center rounded-full bg-slate-200 hover:bg-slate-300 transition-colors cursor-pointer text-slate-600 font-bold">GH</a>
-              </div>
             </div>
             
             <div>
@@ -151,7 +148,6 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
                 <li><Link to="/features" className="hover:text-indigo-600 transition-colors">Features</Link></li>
                 <li><Link to="/how-it-works" className="hover:text-indigo-600 transition-colors">Architecture</Link></li>
                 <li><Link to="/pricing" className="hover:text-indigo-600 transition-colors">Open Access</Link></li>
-                <li><a href="https://github.com/wachira567" target="_blank" rel="noreferrer" className="hover:text-indigo-600 transition-colors">GitHub</a></li>
               </ul>
             </div>
             
@@ -168,9 +164,8 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <h4 className="font-semibold text-slate-900 mb-4">Company</h4>
               <ul className="space-y-3 text-sm text-slate-500">
                 <li><Link to="/about" className="hover:text-indigo-600 transition-colors">About</Link></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Careers</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Privacy</a></li>
-                <li><a href="#" className="hover:text-indigo-600 transition-colors">Terms</a></li>
+                <li><Link to="/privacy" className="hover:text-indigo-600 transition-colors">Privacy Policy</Link></li>
+                <li><Link to="/terms" className="hover:text-indigo-600 transition-colors">Terms of Service</Link></li>
               </ul>
             </div>
           </div>
