@@ -10,7 +10,7 @@ import AnalyticsPage from "./pages/AnalyticsPage";
 import AdminDashboardPage from "./pages/AdminDashboardPage";
 import TourGuide from "./components/TourGuide";
 
-import LoginPage from "./pages/LoginPage";
+import LandingPage from "./pages/LandingPage";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -91,7 +91,7 @@ function App() {
       <AuthProvider>
         <BrowserRouter>
           <Routes>
-            <Route path="/login" element={<LoginPage />} />
+            <Route path="/login" element={<LandingPage />} />
             <Route path="/*" element={
               <ProtectedRoute>
                 <MainLayout>
