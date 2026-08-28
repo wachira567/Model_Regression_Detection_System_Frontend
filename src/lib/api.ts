@@ -97,5 +97,33 @@ export const api = {
   getAdminStats: async () => {
     const response = await apiClient.get(`/admin/stats`);
     return response.data;
+  },
+  
+  // Invitations
+  getInvitations: async () => {
+    const response = await apiClient.get(`/invitations`);
+    return response.data;
+  },
+  createInvitation: async (email: string, role: string) => {
+    const response = await apiClient.post(`/invitations`, { email, role });
+    return response.data;
+  },
+  acceptInvitation: async (token: string) => {
+    const response = await apiClient.post(`/invitations/accept`, { token });
+    return response.data;
+  },
+  
+  // Projects
+  getProjects: async () => {
+    const response = await apiClient.get(`/projects`);
+    return response.data;
+  },
+  createProject: async (name: string) => {
+    const response = await apiClient.post(`/projects`, { name });
+    return response.data;
+  },
+  deleteProject: async (id: string) => {
+    const response = await apiClient.delete(`/projects/${id}`);
+    return response.data;
   }
 };

@@ -17,6 +17,8 @@ import CostPilotPage from "./pages/CostPilotPage";
 import FeatureFlagsPage from "./pages/FeatureFlagsPage";
 import TraceExplorerPage from "./pages/TraceExplorerPage";
 import SemanticCachePage from "./pages/SemanticCachePage";
+import SettingsPage from "./pages/SettingsPage";
+import AcceptInvitePage from "./pages/AcceptInvitePage";
 import TourGuide from "./components/TourGuide";
 
 // Public Pages
@@ -55,6 +57,9 @@ function MainLayout({ children }: { children: React.ReactNode }) {
     { name: 'Datasets', path: '/dashboard/datasets', icon: Database },
   ];
 
+  // Everyone gets settings
+  navItems.push({ name: 'Settings', path: '/dashboard/settings', icon: ShieldCheck });
+
   if (isSuperadmin) {
     navItems.push({ name: 'Admin', path: '/dashboard/admin', icon: ShieldCheck });
   }
@@ -68,6 +73,13 @@ function MainLayout({ children }: { children: React.ReactNode }) {
           </div>
           <span className="font-extrabold text-2xl tracking-tight text-slate-900">MRDS</span>
         </Link>
+      </div>
+      
+      <div className="px-6 mb-4">
+        <select className="w-full h-10 px-3 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+          <option>Default Workspace</option>
+          <option>Create New Project...</option>
+        </select>
       </div>
       
       <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto">
@@ -194,6 +206,7 @@ function App() {
             
             {/* Auth Routes */}
             <Route path="/login" element={<AuthPage />} />
+            <Route path="/accept-invite" element={<AcceptInvitePage />} />
             
             {/* Authenticated Dashboard Routes */}
             <Route path="/dashboard/*" element={
@@ -211,6 +224,7 @@ function App() {
                     <Route path="/prompts" element={<PromptsPage />} />
                     <Route path="/datasets" element={<DatasetsPage />} />
                     <Route path="/admin" element={<AdminDashboardPage />} />
+                    <Route path="/settings" element={<SettingsPage />} />
                     <Route path="/eval-runs/:runId" element={<EvalRunDetailPage />} />
                   </Routes>
                 </MainLayout>
