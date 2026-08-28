@@ -32,10 +32,12 @@ import AboutPage from "./pages/AboutPage";
 
 // Docs Pages
 import DocsLayout from "./pages/docs/DocsLayout";
-import Introduction from "./pages/docs/Introduction";
-import Architecture from "./pages/docs/Architecture";
-import Features from "./pages/docs/Features";
-import ApiReference from "./pages/docs/ApiReference";
+import UserGettingStarted from "./pages/docs/UserGettingStarted";
+import UserDatasets from "./pages/docs/UserDatasets";
+import UserEvaluations from "./pages/docs/UserEvaluations";
+import DevDesignDecisions from "./pages/docs/DevDesignDecisions";
+import DevArchitecture from "./pages/docs/DevArchitecture";
+import DevApiReference from "./pages/docs/DevApiReference";
 
 const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
@@ -217,10 +219,12 @@ function App() {
             
             {/* Documentation Routes */}
             <Route path="/docs" element={<DocsLayout />}>
-              <Route index element={<Introduction />} />
-              <Route path="architecture" element={<Architecture />} />
-              <Route path="features" element={<Features />} />
-              <Route path="api" element={<ApiReference />} />
+              <Route index element={<UserGettingStarted />} />
+              <Route path="datasets" element={<UserDatasets />} />
+              <Route path="evaluations" element={<UserEvaluations />} />
+              <Route path="design" element={<DevDesignDecisions />} />
+              <Route path="architecture" element={<DevArchitecture />} />
+              <Route path="api" element={<DevApiReference />} />
             </Route>
             
             {/* Authenticated Dashboard Routes */}
