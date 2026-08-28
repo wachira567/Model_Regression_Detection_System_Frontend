@@ -10,8 +10,8 @@ export default function HowItWorksPage() {
     {
       icon: <Database className="w-8 h-8 text-white" />,
       color: "bg-indigo-500",
-      title: "1. Define your Golden Datasets",
-      description: "Upload CSVs or use our API to define the absolute ground truth for your prompts. A Golden Dataset contains the prompt, the expected output, and optionally, a category for granular analytics.",
+      title: "1. Dataset Ingestion Pipeline",
+      description: "Leveraging PostgreSQL and background workers, MRDS securely ingests ground truth data. A Golden Dataset contains the prompt, the expected output, and metadata for granular analytics.",
       code: `// Example Dataset format
 [
   {
@@ -24,8 +24,8 @@ export default function HowItWorksPage() {
     {
       icon: <Play className="w-8 h-8 text-white" />,
       color: "bg-amber-500",
-      title: "2. Trigger evaluations on deploy",
-      description: "Whenever you update your model prompt or backend logic, trigger an evaluation run. MRDS will automatically run your entire Golden Dataset through your new model and compare the results.",
+      title: "2. Async Evaluation Triggers",
+      description: "FastAPI endpoints allow for programmatic triggering of evaluation runs. Background tasks handle the LLM invocations asynchronously, enabling massive concurrent processing.",
       code: `$ curl -X POST https://api.mrds.dev/v1/eval-runs \\
   -H "Authorization: Bearer $MRDS_API_KEY" \\
   -d '{"dataset_id": "ds_123", "model": "gpt-4"}'`
@@ -33,8 +33,8 @@ export default function HowItWorksPage() {
     {
       icon: <AlertCircle className="w-8 h-8 text-white" />,
       color: "bg-emerald-500",
-      title: "3. Catch regressions instantly",
-      description: "MRDS uses advanced similarity scoring and LLM-as-a-judge to grade the new outputs. If the overall score drops below your configured threshold, your CI/CD pipeline fails, preventing the regression from reaching production.",
+      title: "3. Semantic Grading & Tracing",
+      description: "Using LLM-as-a-judge and semantic similarity algorithms, outputs are graded. The Trace Explorer visualizes the exact execution graph, identifying where prompt drift occurred.",
       code: `Run completed.
 Score: 82% (Threshold: 90%)
 Result: FAILED. 
@@ -47,12 +47,12 @@ Drift detected in category: 'summarization'`
       <div className="max-w-7xl mx-auto px-6">
         
         <FadeInOnScroll className="text-center max-w-3xl mx-auto mb-32 mt-16">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
-            Three steps to<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">unbreakable AI.</span>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
+            Architecture &<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-900">Data Flow.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
-            Integrating MRDS into your workflow takes less than 10 minutes. Here's how it protects your production environment.
+            A transparent look at the underlying systems and integration points powering the MRDS platform.
           </p>
         </FadeInOnScroll>
 
@@ -94,7 +94,7 @@ Drift detected in category: 'summarization'`
 
         <FadeInOnScroll className="mt-40 text-center">
           <Button onClick={() => navigate('/login')} className="h-16 px-12 bg-slate-900 text-white hover:bg-slate-800 rounded-full font-bold text-xl shadow-xl hover:-translate-y-1 transition-all group">
-            Start integrating now
+            Explore the Dashboard
             <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" />
           </Button>
         </FadeInOnScroll>

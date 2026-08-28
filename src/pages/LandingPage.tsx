@@ -116,21 +116,21 @@ export default function LandingPage() {
           variants={staggerContainer}
           className="max-w-4xl mx-auto z-10"
         >
-          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-slate-100 text-slate-600 text-sm font-medium mb-8 border border-slate-200">
-            <span className="flex h-2 w-2 rounded-full bg-emerald-500"></span>
-            Now in public beta
+          <motion.div variants={fadeInUp} className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-slate-900/5 border border-slate-900/10 text-slate-700 text-sm font-semibold mb-8 backdrop-blur-sm shadow-sm">
+            <span className="flex h-2 w-2 rounded-full bg-emerald-500 animate-pulse"></span>
+            Open Source Portfolio Project
           </motion.div>
           
           <motion.div variants={fadeInUp}>
-            <h1 className="text-5xl md:text-7xl font-extrabold tracking-tighter text-slate-900 leading-[1.1] mb-6">
-              Silence the Noise.<br />
-              <span className="text-transparent bg-clip-text bg-gradient-to-r from-indigo-600 to-emerald-500">See the Regressions.</span>
+            <h1 className="text-6xl md:text-8xl font-black tracking-tighter text-slate-900 leading-[1.05] mb-6">
+              AI Evaluation,<br />
+              <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-900">Engineered.</span>
             </h1>
           </motion.div>
 
           <motion.div variants={fadeInUp}>
-            <p className="text-lg md:text-xl text-slate-500 font-medium mb-12 max-w-2xl mx-auto leading-relaxed">
-              You train models. They regress. We catch them before your users do. The ultimate safety net for generative AI.
+            <p className="text-lg md:text-2xl text-slate-600 font-medium mb-12 max-w-3xl mx-auto leading-relaxed">
+              An open-source showcase platform built to detect LLM regressions in production using Golden Datasets, Semantic Caching, and rigorous A/B testing.
             </p>
           </motion.div>
 
@@ -247,7 +247,7 @@ export default function LandingPage() {
       </section>
 
       {/* Story / Features Section */}
-      <section id="features" className="py-24 bg-slate-50 border-t border-slate-100">
+      <section id="features" className="py-32 bg-white border-t border-slate-100">
         <div className="max-w-7xl mx-auto px-6">
           <motion.div 
             initial="hidden"
@@ -256,11 +256,11 @@ export default function LandingPage() {
             variants={fadeInUp}
             className="text-center mb-20"
           >
-            <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-slate-900 mb-4">
-              Designed for reliability.
+            <h2 className="text-4xl md:text-5xl font-black tracking-tight text-slate-900 mb-6">
+              Built for depth.
             </h2>
-            <p className="text-lg text-slate-500 max-w-2xl mx-auto">
-              Everything you need to ensure your AI models perform flawlessly across every release.
+            <p className="text-xl text-slate-500 max-w-2xl mx-auto font-medium">
+              A comprehensive exploration into modern full-stack development and AI observability.
             </p>
           </motion.div>
 
@@ -268,18 +268,18 @@ export default function LandingPage() {
             {[
               {
                 icon: <Database className="h-6 w-6 text-indigo-500" />,
-                title: "Golden Datasets",
-                desc: "Curate and lock in your perfect test cases. Never lose track of what 'correct' looks like."
+                title: "Data Pipelines",
+                desc: "Demonstrating complex relational data modeling and background processing for automated ground-truth curation."
               },
               {
                 icon: <Zap className="h-6 w-6 text-amber-500" />,
-                title: "Instant Analytics",
-                desc: "Real-time regression scoring. Know exactly how much your model degraded, and exactly where."
+                title: "Performance",
+                desc: "Implementing vector-based semantic caching to drastically reduce LLM API costs and response latencies."
               },
               {
                 icon: <ShieldCheck className="h-6 w-6 text-emerald-500" />,
-                title: "Enterprise Grade",
-                desc: "Secure Multi-Tenancy, role-based access, and isolated environments out of the box."
+                title: "Architecture",
+                desc: "Showcasing a robust FastAPI and React stack with secure authentication, multi-tenancy, and clean RBAC."
               }
             ].map((feature, i) => (
               <motion.div
@@ -308,7 +308,7 @@ export default function LandingPage() {
         <div className="max-w-7xl mx-auto px-6 flex flex-col md:flex-row justify-between items-center gap-4 text-sm font-medium text-slate-400">
           <div className="flex items-center gap-2">
             <Activity className="h-4 w-4" />
-            <span>&copy; {new Date().getFullYear()} MRDS Enterprise. All rights reserved.</span>
+            <span>&copy; {new Date().getFullYear()} MRDS Open Source Project. Crafted for showcase.</span>
           </div>
           <div className="flex gap-6">
             <a href="#" className="hover:text-slate-800 transition-colors">Privacy Policy</a>

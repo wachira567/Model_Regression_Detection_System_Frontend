@@ -10,42 +10,42 @@ export default function FeaturesPage() {
     {
       icon: <Database className="w-8 h-8 text-indigo-500" />,
       title: "Golden Datasets",
-      description: "Automatically bootstrap test datasets from production logs to curate perfect test cases. MRDS securely stores these ground truths.",
+      description: "Implementing background workers to automatically bootstrap test datasets from production logs, demonstrating robust data curation.",
       color: "bg-indigo-50",
       border: "border-indigo-100"
     },
     {
       icon: <Target className="w-8 h-8 text-blue-500" />,
       title: "A/B Prompt Testing",
-      description: "Safely run multiple prompt variants in production and measure their performance in real-time. Know exactly which prompt converts better.",
+      description: "Demonstrating statistical analysis and variant routing logic to safely measure prompt performance across different LLM configurations.",
       color: "bg-blue-50",
       border: "border-blue-100"
     },
     {
       icon: <Zap className="w-8 h-8 text-amber-500" />,
       title: "Semantic Caching",
-      description: "Instantly serve responses for semantically similar queries. Cut down your LLM API costs by up to 80% while delivering zero-latency experiences.",
+      description: "Showcasing vector-based semantic caching logic to cut down LLM API costs while maintaining high-performance response times.",
       color: "bg-amber-50",
       border: "border-amber-100"
     },
     {
       icon: <ShieldCheck className="w-8 h-8 text-emerald-500" />,
       title: "LLM Cost Autopilot",
-      description: "Intelligently route easy queries to cheaper models (like GPT-3.5) and hard queries to GPT-4 based on historical difficulty scoring.",
+      description: "Building dynamic routing heuristics to intelligently send simpler queries to faster models, and complex ones to reasoning models.",
       color: "bg-emerald-50",
       border: "border-emerald-100"
     },
     {
       icon: <GitBranch className="w-8 h-8 text-purple-500" />,
       title: "AI Feature Flags",
-      description: "Control your AI prompt rollouts with surgical precision. Ramp up traffic from 0 to 100% safely, or use an instant kill switch.",
+      description: "Implementing a surgical rollout system with instance-level control, incremental traffic routing, and instant kill-switches.",
       color: "bg-purple-50",
       border: "border-purple-100"
     },
     {
       icon: <Cpu className="w-8 h-8 text-rose-500" />,
       title: "Failure Forensics",
-      description: "Visual trace explorer that breaks down every pipeline step (Retrieval, Generation, Judge) to show exactly why a model failed in production.",
+      description: "Creating a visual trace explorer that parses and presents complex execution graphs to pinpoint exactly why an evaluation failed.",
       color: "bg-rose-50",
       border: "border-rose-100"
     }
@@ -57,12 +57,12 @@ export default function FeaturesPage() {
         
         {/* Header */}
         <FadeInOnScroll className="text-center max-w-3xl mx-auto mb-32 mt-16">
-          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
-            Powerful features.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Beautifully simple.</span>
+          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
+            Engineered for scale.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-slate-800">Built for developers.</span>
           </h1>
           <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
-            MRDS provides a comprehensive suite of tools designed to ensure your generative AI applications never degrade in production.
+            A showcase of full-stack engineering, demonstrating modern approaches to AI observability, automated evaluation, and backend scaling.
           </p>
         </FadeInOnScroll>
 
@@ -88,9 +88,9 @@ export default function FeaturesPage() {
           <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500 rounded-full blur-[150px] opacity-30 translate-x-1/2 -translate-y-1/2"></div>
           <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-[150px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
           
-          <h2 className="text-4xl md:text-6xl font-bold mb-8 relative z-10 tracking-tight">Built on modern architecture</h2>
+          <h2 className="text-4xl md:text-6xl font-black mb-8 relative z-10 tracking-tight">Built on modern architecture</h2>
           <p className="text-slate-400 max-w-3xl mx-auto text-xl mb-16 relative z-10 font-medium leading-relaxed">
-            Powered by FastAPI, PostgreSQL, and React. Engineered for lightning-fast evaluations and massive scalability from day one.
+            Powered by FastAPI, PostgreSQL, and React. Engineered to demonstrate real-world patterns like background task queues and multi-tenant data modeling.
           </p>
           
           <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
