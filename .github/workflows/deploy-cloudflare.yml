@@ -29,6 +29,7 @@ jobs:
         run: npm run build
         env:
           VITE_API_BASE_URL: "https://model-regression-detection-system-backend-git-1034917257664.europe-west3.run.app/api/v1"
+          VITE_GOOGLE_CLIENT_ID: ${{ secrets.VITE_GOOGLE_CLIENT_ID }}
 
       - name: Deploy to Cloudflare Pages
         uses: cloudflare/pages-action@v1
