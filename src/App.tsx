@@ -16,6 +16,7 @@ import ExperimentDetailPage from "./pages/ExperimentDetailPage";
 import CostPilotPage from "./pages/CostPilotPage";
 import FeatureFlagsPage from "./pages/FeatureFlagsPage";
 import TraceExplorerPage from "./pages/TraceExplorerPage";
+import SemanticCachePage from "./pages/SemanticCachePage";
 import TourGuide from "./components/TourGuide";
 
 // Public Pages
@@ -47,6 +48,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
     { name: 'Eval Runs', path: '/dashboard', icon: LayoutDashboard },
     { name: 'Cost Pilot', path: '/dashboard/cost-pilot', icon: Activity },
     { name: 'Feature Flags', path: '/dashboard/flags', icon: Activity },
+    { name: 'Semantic Cache', path: '/dashboard/cache', icon: Activity },
     { name: 'Experiments', path: '/dashboard/experiments', icon: Activity },
     { name: 'Analytics', path: '/dashboard/analytics', icon: Activity },
     { name: 'Prompts', path: '/dashboard/prompts', icon: FileTerminal },
@@ -201,6 +203,7 @@ function App() {
                     <Route path="/" element={<EvalRunsPage />} />
                     <Route path="/cost-pilot" element={<CostPilotPage />} />
                     <Route path="/flags" element={<FeatureFlagsPage />} />
+                    <Route path="/cache" element={<SemanticCachePage />} />
                     <Route path="/experiments" element={<ExperimentsPage />} />
                     <Route path="/experiments/:id" element={<ExperimentDetailPage />} />
                     <Route path="/traces/:id" element={<TraceExplorerPage />} />

@@ -89,5 +89,9 @@ export const api = {
   getEvalTraces: async (evalResultId: string) => {
     const response = await apiClient.get(`/traces/eval/${evalResultId}`);
     return response.data;
+  },
+  getCacheStats: async () => {
+    const response = await apiClient.get(`/cache/stats`);
+    return response.data;
   }
 };
