@@ -1,10 +1,8 @@
 import { useState, useEffect } from "react";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
-import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Switch } from "@/components/ui/switch";
-import { Flag, PlayCircle, ShieldAlert } from "lucide-react";
+import { Flag, ShieldAlert } from "lucide-react";
 import { api } from "../lib/api";
 
 export default function FeatureFlagsPage() {
@@ -91,10 +89,11 @@ export default function FeatureFlagsPage() {
                       </div>
                     </TableCell>
                     <TableCell>
-                      <Switch 
+                      <input 
+                        type="checkbox"
                         checked={flag.is_enabled} 
-                        onCheckedChange={() => toggleFlag(flag.id, flag.is_enabled)} 
-                        className="data-[state=checked]:bg-emerald-500"
+                        onChange={() => toggleFlag(flag.id, flag.is_enabled)} 
+                        className="w-5 h-5 accent-emerald-500 rounded cursor-pointer"
                       />
                     </TableCell>
                     <TableCell>

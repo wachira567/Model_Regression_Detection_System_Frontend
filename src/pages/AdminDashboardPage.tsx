@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { ShieldAlert, Users, Search, ShieldCheck, UserCheck, Activity, Database, Zap } from 'lucide-react';
+import { ShieldAlert, Users, Search, ShieldCheck, Activity, Database, Zap } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import {
@@ -76,8 +76,6 @@ export default function AdminDashboardPage() {
     );
   }
 
-  const superAdminCount = users.filter(u => u.is_superadmin).length;
-  const activeUserCount = users.filter(u => u.is_active).length;
 
   return (
     <div className="space-y-8 pb-12">

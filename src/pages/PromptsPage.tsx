@@ -52,8 +52,8 @@ export default function PromptsPage() {
           <p className="text-slate-500 mt-2 text-lg">Manage versions of your LLM prompts and models across features.</p>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
-          <Button variant="outline" asChild className="gap-2 h-12 px-6 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl font-bold transition-all w-full sm:w-auto">
-            <Link to="/dashboard/experiments/new">
+          <Button variant="outline" className="gap-2 h-12 px-6 border-slate-200 text-slate-700 hover:bg-slate-50 rounded-xl font-bold transition-all w-full sm:w-auto">
+            <Link to="/dashboard/experiments/new" className="flex items-center gap-2">
               <FlaskConical className="h-5 w-5 text-indigo-600" />
               New A/B Test
             </Link>

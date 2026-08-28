@@ -3,7 +3,7 @@ import { useGoogleLogin } from '@react-oauth/google';
 import axios from 'axios';
 import { useAuth } from '../contexts/AuthContext';
 import { useNavigate, Link } from 'react-router-dom';
-import { Mail, ArrowRight, ShieldCheck, CheckCircle2, ArrowLeft, Loader2 } from 'lucide-react';
+import { ArrowRight, ShieldCheck, CheckCircle2, ArrowLeft, Loader2 } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 

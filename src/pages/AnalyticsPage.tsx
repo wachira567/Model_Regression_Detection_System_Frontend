@@ -1,7 +1,7 @@
 import { useState, useEffect } from "react";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { LineChart, Line, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, BarChart, Bar } from "recharts";
-import { Activity, TrendingUp, Calendar, Zap, AlertCircle } from "lucide-react";
+import { Activity, TrendingUp, Zap, AlertCircle } from "lucide-react";
 import { api } from "../lib/api";
 
 export default function AnalyticsPage() {

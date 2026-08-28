@@ -83,7 +83,7 @@ export default function ExperimentDetailPage() {
   return (
     <div className="space-y-8 pb-12">
       <div className="flex items-center gap-4">
-        <Button variant="ghost" size="icon" asChild className="rounded-full hover:bg-slate-100">
+        <Button variant="ghost" size="icon" className="rounded-full hover:bg-slate-100">
           <Link to="/dashboard/experiments"><ArrowLeft className="h-5 w-5 text-slate-600" /></Link>
         </Button>
         <div className="flex-1">

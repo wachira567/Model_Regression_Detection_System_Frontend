@@ -66,6 +66,16 @@ export const api = {
     const response = await apiClient.get(`/datasets?${params.toString()}`);
     return response.data;
   },
+  getExperiments: async (page: number = 1, size: number = 10, search?: string) => {
+    const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
+    if (search) params.append("search", search);
+    const response = await apiClient.get(`/experiments?${params.toString()}`);
+    return response.data;
+  },
+  getExperimentResults: async (id: string) => {
+    const response = await apiClient.get(`/experiments/${id}/results`);
+    return response.data;
+  },
   getAnalyticsTrends: async (days: number = 7) => {
     const response = await apiClient.get(`/reports/analytics/trends?days=${days}`);
     return response.data;

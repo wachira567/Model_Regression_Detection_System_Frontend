@@ -3,7 +3,7 @@ import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { Badge } from "@/components/ui/badge";
-import { FlaskConical, Plus, Search, Sparkles, Activity, Play, Square } from "lucide-react";
+import { FlaskConical, Plus, Search, Sparkles, Activity } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { api } from "../lib/api";
 
@@ -195,7 +195,7 @@ export default function ExperimentsPage() {
                       </TableCell>
                       <TableCell>
                         <div className="flex gap-1 items-center">
-                          {e.variants.map((v, i) => (
+                          {e.variants.map((v) => (
                             <span key={v.id} className="px-2 py-0.5 text-xs font-bold rounded bg-slate-100 text-slate-600">
                               {v.traffic_percentage}%
                             </span>

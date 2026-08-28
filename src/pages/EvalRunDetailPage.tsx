@@ -1,8 +1,9 @@
 import { useEffect, useState } from "react";
-import { useParams, Link } from "react-router-dom";
+import { useParams, Link, useNavigate } from "react-router-dom";
 import { api } from "../lib/api";
 import { Card, CardHeader, CardTitle, CardContent } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
+import { Button } from "@/components/ui/button";
 import { ArrowLeft, CheckCircle2, XCircle, Target, Activity, Zap, Database } from "lucide-react";
 import {
   Table,
@@ -16,6 +17,7 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
 export default function EvalRunDetailPage() {
   const { runId } = useParams();
+  const navigate = useNavigate();
   const [run, setRun] = useState<any>(null);
   const [results, setResults] = useState<any[]>([]);
   const [loading, setLoading] = useState(true);

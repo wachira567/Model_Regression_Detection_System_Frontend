@@ -3,7 +3,7 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { Coins, BrainCircuit, ShieldCheck, ArrowUpRight, CheckCircle2 } from "lucide-react";
+import { Coins, BrainCircuit, ShieldCheck, ArrowUpRight } from "lucide-react";
 import { api } from "../lib/api";
 
 export default function CostPilotPage() {
