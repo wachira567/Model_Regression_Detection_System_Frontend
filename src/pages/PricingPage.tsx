@@ -31,12 +31,14 @@ export default function PricingPage() {
                 <h2 className="text-3xl font-bold text-slate-900 mb-6">Everything is included.</h2>
                 <ul className="space-y-4">
                   {[
-                    "Unlimited Golden Datasets",
-                    "Unlimited Evaluation Runs",
-                    "Unlimited Models (OpenAI, Anthropic, Local)",
+                    "Golden Dataset Bootstrapping",
+                    "A/B Prompt Experiments",
+                    "Semantic Caching",
+                    "LLM Cost Autopilot",
+                    "AI Feature Flags",
+                    "Failure Forensics Tracing",
                     "Enterprise Multi-Tenancy & RBAC",
-                    "Full CI/CD Integration via API",
-                    "Real-time Drift Analytics"
+                    "Full CI/CD Integration via API"
                   ].map((feat, i) => (
                     <li key={i} className="flex items-center gap-3">
                       <CheckCircle2 className="w-6 h-6 text-emerald-500 shrink-0" />

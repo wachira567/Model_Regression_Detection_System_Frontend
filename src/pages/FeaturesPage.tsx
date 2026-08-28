@@ -10,44 +10,44 @@ export default function FeaturesPage() {
     {
       icon: <Database className="w-8 h-8 text-indigo-500" />,
       title: "Golden Datasets",
-      description: "Curate test cases that define perfection for your model. MRDS securely stores these ground truths and evaluates all future model iterations against them.",
+      description: "Automatically bootstrap test datasets from production logs to curate perfect test cases. MRDS securely stores these ground truths.",
       color: "bg-indigo-50",
       border: "border-indigo-100"
     },
     {
-      icon: <Zap className="w-8 h-8 text-amber-500" />,
-      title: "Real-time Regression Scoring",
-      description: "When you push a new model, we instantly compare its outputs to your golden dataset using advanced similarity metrics and LLM-as-a-judge capabilities.",
-      color: "bg-amber-50",
-      border: "border-amber-100"
-    },
-    {
-      icon: <GitBranch className="w-8 h-8 text-emerald-500" />,
-      title: "CI/CD Integration",
-      description: "Trigger evaluations directly from your GitHub Actions or Jenkins pipelines. Block deployments automatically if the regression score drops below your threshold.",
-      color: "bg-emerald-50",
-      border: "border-emerald-100"
-    },
-    {
-      icon: <Target className="w-8 h-8 text-rose-500" />,
-      title: "Drift Analytics",
-      description: "Visualize exactly how your model's behavior is drifting over time. Pinpoint specific prompt categories where the model is getting worse.",
-      color: "bg-rose-50",
-      border: "border-rose-100"
-    },
-    {
-      icon: <ShieldCheck className="w-8 h-8 text-blue-500" />,
-      title: "Enterprise Multi-Tenancy",
-      description: "Full isolation between organizations. Invite your team members with granular Role-Based Access Control (RBAC) and Super Admin capabilities.",
+      icon: <Target className="w-8 h-8 text-blue-500" />,
+      title: "A/B Prompt Testing",
+      description: "Safely run multiple prompt variants in production and measure their performance in real-time. Know exactly which prompt converts better.",
       color: "bg-blue-50",
       border: "border-blue-100"
     },
     {
-      icon: <Cpu className="w-8 h-8 text-purple-500" />,
-      title: "Model Agnostic",
-      description: "Whether you use OpenAI, Anthropic, or open-source local models, MRDS seamlessly integrates via our flexible REST API.",
+      icon: <Zap className="w-8 h-8 text-amber-500" />,
+      title: "Semantic Caching",
+      description: "Instantly serve responses for semantically similar queries. Cut down your LLM API costs by up to 80% while delivering zero-latency experiences.",
+      color: "bg-amber-50",
+      border: "border-amber-100"
+    },
+    {
+      icon: <ShieldCheck className="w-8 h-8 text-emerald-500" />,
+      title: "LLM Cost Autopilot",
+      description: "Intelligently route easy queries to cheaper models (like GPT-3.5) and hard queries to GPT-4 based on historical difficulty scoring.",
+      color: "bg-emerald-50",
+      border: "border-emerald-100"
+    },
+    {
+      icon: <GitBranch className="w-8 h-8 text-purple-500" />,
+      title: "AI Feature Flags",
+      description: "Control your AI prompt rollouts with surgical precision. Ramp up traffic from 0 to 100% safely, or use an instant kill switch.",
       color: "bg-purple-50",
       border: "border-purple-100"
+    },
+    {
+      icon: <Cpu className="w-8 h-8 text-rose-500" />,
+      title: "Failure Forensics",
+      description: "Visual trace explorer that breaks down every pipeline step (Retrieval, Generation, Judge) to show exactly why a model failed in production.",
+      color: "bg-rose-50",
+      border: "border-rose-100"
     }
   ];
 

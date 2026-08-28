@@ -121,17 +121,32 @@ export default function HomePage() {
               {
                 icon: <Database className="h-6 w-6 text-indigo-500" />,
                 title: "Golden Datasets",
-                desc: "Curate and lock in your perfect test cases. Never lose track of what 'correct' looks like."
+                desc: "Automatically bootstrap test datasets from production logs to curate perfect test cases."
               },
               {
                 icon: <Zap className="h-6 w-6 text-amber-500" />,
-                title: "Instant Analytics",
-                desc: "Real-time regression scoring. Know exactly how much your model degraded, and exactly where."
+                title: "Semantic Caching",
+                desc: "Instantly serve responses for semantically similar queries to drastically cut latency and LLM costs."
               },
               {
                 icon: <ShieldCheck className="h-6 w-6 text-emerald-500" />,
-                title: "Enterprise Grade",
-                desc: "Secure Multi-Tenancy, role-based access, and isolated environments out of the box."
+                title: "Cost Autopilot",
+                desc: "Intelligently route easy queries to cheaper models (like GPT-3.5) and hard ones to GPT-4."
+              },
+              {
+                icon: <Database className="h-6 w-6 text-blue-500" />,
+                title: "A/B Prompt Testing",
+                desc: "Safely run multiple prompt variants in production and measure their performance in real-time."
+              },
+              {
+                icon: <Zap className="h-6 w-6 text-purple-500" />,
+                title: "AI Feature Flags",
+                desc: "Control prompt rollouts with precision. Ramp up traffic from 0 to 100% or use the kill switch."
+              },
+              {
+                icon: <ShieldCheck className="h-6 w-6 text-rose-500" />,
+                title: "Failure Forensics",
+                desc: "Visual trace explorer that breaks down every pipeline step to show exactly why a model failed."
               }
             ].map((feature, i) => (
               <FadeInOnScroll key={i} delay={i * 0.1}>

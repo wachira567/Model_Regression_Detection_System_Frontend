@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 import { useAuth } from '../contexts/AuthContext';
-import { ShieldAlert, Users, Search, ShieldCheck, UserCheck, Shield } from 'lucide-react';
+import { ShieldAlert, Users, Search, ShieldCheck, UserCheck, Activity, Database, Zap } from 'lucide-react';
 import { Button } from '../components/ui/button';
 import { Input } from '../components/ui/input';
 import {
@@ -13,6 +13,7 @@ import {
 } from '../components/ui/table';
 import { Badge } from '../components/ui/badge';
 import axios from 'axios';
+import { api } from '../lib/api';
 
 const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
@@ -28,15 +29,19 @@ interface User {
 export default function AdminDashboardPage() {
   const { isSuperadmin } = useAuth();
   const [users, setUsers] = useState<User[]>([]);
+  const [stats, setStats] = useState<any>(null);
   const [loading, setLoading] = useState(true);
   const [search, setSearch] = useState('');
 
-  const fetchUsers = async () => {
+  const fetchData = async () => {
     try {
-      const res = await axios.get(`${API_BASE_URL}/admin/users`, {
-        params: { search, size: 50 }
-      });
-      setUsers(res.data.items);
+      setLoading(true);
+      const [usersRes, statsRes] = await Promise.all([
+        axios.get(`${API_BASE_URL}/admin/users`, { params: { search, size: 50 } }),
+        api.getAdminStats().catch(() => null)
+      ]);
+      setUsers(usersRes.data.items);
+      setStats(statsRes);
     } catch (err) {
       console.error(err);
     } finally {
@@ -45,13 +50,15 @@ export default function AdminDashboardPage() {
   };
 
   useEffect(() => {
-    fetchUsers();
-  }, [search]);
+    if (isSuperadmin) {
+      fetchData();
+    }
+  }, [search, isSuperadmin]);
 
   const handleElevate = async (userId: string) => {
     try {
       await axios.post(`${API_BASE_URL}/admin/users/${userId}/elevate`);
-      fetchUsers();
+      fetchData();
     } catch (err: any) {
       alert(err.response?.data?.detail || "Failed to update user");
     }
@@ -81,38 +88,48 @@ export default function AdminDashboardPage() {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
           <div className="w-16 h-16 rounded-2xl bg-blue-50 text-blue-600 flex items-center justify-center shrink-0">
             <Users className="w-8 h-8" />
           </div>
           <div>
             <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Total Users</p>
-            <p className="text-4xl font-extrabold text-slate-900">{users.length}</p>
+            <p className="text-3xl font-extrabold text-slate-900">{stats?.total_users || users.length}</p>
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
           <div className="w-16 h-16 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shrink-0">
-            <UserCheck className="w-8 h-8" />
+            <Activity className="w-8 h-8" />
           </div>
           <div>
-            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Active Accounts</p>
-            <p className="text-4xl font-extrabold text-slate-900">{activeUserCount}</p>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Total Evals</p>
+            <p className="text-3xl font-extrabold text-slate-900">{stats?.total_eval_runs || 0}</p>
           </div>
         </div>
-
-        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6 relative overflow-hidden group">
-          <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full blur-[50px] opacity-10 group-hover:opacity-20 transition-opacity"></div>
-          <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0 relative z-10">
-            <Shield className="w-8 h-8" />
+        
+        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
+          <div className="w-16 h-16 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shrink-0">
+            <Zap className="w-8 h-8" />
           </div>
-          <div className="relative z-10">
-            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Super Admins</p>
-            <p className="text-4xl font-extrabold text-slate-900">{superAdminCount}</p>
+          <div>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Routing</p>
+            <p className="text-3xl font-extrabold text-slate-900">{stats?.total_routing_decisions || 0}</p>
+          </div>
+        </div>
+        
+        <div className="bg-white p-6 rounded-3xl border border-slate-200 shadow-sm flex items-center gap-6">
+          <div className="w-16 h-16 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shrink-0">
+            <Database className="w-8 h-8" />
+          </div>
+          <div>
+            <p className="text-sm font-bold text-slate-400 uppercase tracking-wider mb-1">Cache</p>
+            <p className="text-3xl font-extrabold text-slate-900">{stats?.total_cache_items || 0}</p>
           </div>
         </div>
       </div>
+
 
       <div className="bg-white rounded-3xl shadow-sm border border-slate-200 overflow-hidden">
         <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50">

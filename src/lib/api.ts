@@ -93,5 +93,9 @@ export const api = {
   getCacheStats: async () => {
     const response = await apiClient.get(`/cache/stats`);
     return response.data;
+  },
+  getAdminStats: async () => {
+    const response = await apiClient.get(`/admin/stats`);
+    return response.data;
   }
 };
