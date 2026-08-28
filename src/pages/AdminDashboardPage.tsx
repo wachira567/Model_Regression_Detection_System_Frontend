@@ -12,12 +12,9 @@ import {
   TableRow,
 } from '../components/ui/table';
 import { Badge } from '../components/ui/badge';
-import axios from 'axios';
 import { api } from '../lib/api';
 import { useTour } from '../contexts/TourContext';
 import { ADMIN_DASHBOARD_STEPS } from '../lib/tourConfig';
-
-const API_BASE_URL = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000/api/v1";
 
 interface User {
   id: string;
@@ -48,12 +45,12 @@ export default function AdminDashboardPage() {
   const fetchData = async () => {
     try {
       setLoading(true);
-      const [usersRes, statsRes] = await Promise.all([
-        axios.get(`${API_BASE_URL}/admin/users`, { params: { search, size: 50 } }),
+      const [usersData, statsData] = await Promise.all([
+        api.getUsers(1, 50, search).catch(() => ({ items: [] })),
         api.getAdminStats().catch(() => null)
       ]);
-      setUsers(usersRes.data.items);
-      setStats(statsRes);
+      setUsers(usersData.items);
+      setStats(statsData);
     } catch (err) {
       console.error(err);
     } finally {
@@ -69,10 +66,20 @@ export default function AdminDashboardPage() {
 
   const handleElevate = async (userId: string) => {
     try {
-      await axios.post(`${API_BASE_URL}/admin/users/${userId}/elevate`);
+      await api.elevateUser(userId);
       fetchData();
     } catch (err: any) {
       alert(err.response?.data?.detail || "Failed to update user");
+    }
+  };
+
+  const handleDelete = async (userId: string) => {
+    if (!window.confirm("Are you sure you want to completely remove this user?")) return;
+    try {
+      await api.deleteUser(userId);
+      fetchData();
+    } catch (err: any) {
+      alert(err.response?.data?.detail || "Failed to delete user");
     }
   };
 
@@ -229,18 +236,28 @@ export default function AdminDashboardPage() {
                       {new Date(user.created_at).toLocaleDateString(undefined, { dateStyle: 'medium' })}
                     </TableCell>
                     <TableCell className="text-right pr-6">
-                      <Button 
-                        variant="outline" 
-                        size="sm"
-                        onClick={() => handleElevate(user.id)}
-                        className={`rounded-lg font-semibold transition-all ${
-                          user.is_superadmin 
-                            ? "text-rose-600 border-rose-200 hover:bg-rose-50 hover:text-rose-700" 
-                            : "text-indigo-600 border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
-                        }`}
-                      >
-                        {user.is_superadmin ? 'Revoke Access' : 'Make Super Admin'}
-                      </Button>
+                      <div className="flex justify-end gap-2">
+                        <Button 
+                          variant="outline" 
+                          size="sm"
+                          onClick={() => handleElevate(user.id)}
+                          className={`rounded-lg font-semibold transition-all ${
+                            user.is_superadmin 
+                              ? "text-rose-600 border-rose-200 hover:bg-rose-50 hover:text-rose-700" 
+                              : "text-indigo-600 border-indigo-200 hover:bg-indigo-50 hover:text-indigo-700"
+                          }`}
+                        >
+                          {user.is_superadmin ? 'Revoke Access' : 'Make Super Admin'}
+                        </Button>
+                        <Button 
+                          variant="ghost" 
+                          size="sm"
+                          onClick={() => handleDelete(user.id)}
+                          className="text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors"
+                        >
+                          Delete
+                        </Button>
+                      </div>
                     </TableCell>
                   </TableRow>
                 ))

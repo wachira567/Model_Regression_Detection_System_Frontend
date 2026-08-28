@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
@@ -14,6 +14,9 @@ export default function DatasetsPage() {
   const [pages, setPages] = useState(1);
   const [total, setTotal] = useState(0);
   const [search, setSearch] = useState("");
+  const fileInputRef = useRef<HTMLInputElement>(null);
+  const [uploading, setUploading] = useState(false);
+  const [bootstrapping, setBootstrapping] = useState(false);
 
   useEffect(() => {
     loadDatasets();
@@ -33,6 +36,41 @@ export default function DatasetsPage() {
     }
   };
 
+  const handleUploadClick = () => {
+    fileInputRef.current?.click();
+  };
+
+  const handleFileChange = async (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    try {
+      setUploading(true);
+      await api.uploadDataset(file);
+      alert("Dataset uploaded successfully!");
+      loadDatasets();
+    } catch (err: any) {
+      alert(err.response?.data?.detail || "Failed to upload dataset");
+    } finally {
+      setUploading(false);
+      if (fileInputRef.current) fileInputRef.current.value = '';
+    }
+  };
+
+  const handleBootstrap = async () => {
+    const featureId = window.prompt("Enter feature ID to bootstrap from logs (e.g. email_classifier):");
+    if (!featureId) return;
+    try {
+      setBootstrapping(true);
+      await api.bootstrapDataset(featureId, 7, 50);
+      alert(`Bootstrap complete for ${featureId}`);
+      loadDatasets();
+    } catch (err: any) {
+      alert(err.response?.data?.detail || "Failed to bootstrap");
+    } finally {
+      setBootstrapping(false);
+    }
+  };
+
   return (
     <div className="space-y-8 pb-12">
       <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
@@ -41,13 +79,29 @@ export default function DatasetsPage() {
           <p className="text-slate-500 mt-2 text-lg">Manage the ground truth test cases used for your evaluations.</p>
         </div>
         <div className="flex gap-3 w-full sm:w-auto">
-          <Button variant="outline" className="gap-2 h-12 px-6 border-emerald-200 text-emerald-700 hover:bg-emerald-50 rounded-xl font-bold transition-all w-full sm:w-auto" onClick={() => alert("Simulating Bootstrap: Harvesting from production logs...")}>
+          <Button 
+            onClick={handleBootstrap} 
+            disabled={bootstrapping}
+            variant="outline" 
+            className="gap-2 h-12 px-6 border-emerald-200 text-emerald-700 hover:bg-emerald-50 rounded-xl font-bold transition-all w-full sm:w-auto"
+          >
             <UploadCloud className="h-5 w-5 text-emerald-600" />
-            Bootstrap from Logs
+            {bootstrapping ? "Bootstrapping..." : "Bootstrap from Logs"}
           </Button>
-          <Button className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+          <input 
+            type="file" 
+            ref={fileInputRef} 
+            onChange={handleFileChange} 
+            accept=".json" 
+            className="hidden" 
+          />
+          <Button 
+            onClick={handleUploadClick}
+            disabled={uploading}
+            className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto"
+          >
             <Plus className="h-5 w-5" />
-            Upload Dataset
+            {uploading ? "Uploading..." : "Upload Dataset"}
           </Button>
         </div>
       </div>

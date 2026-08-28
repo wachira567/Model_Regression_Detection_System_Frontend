@@ -66,6 +66,16 @@ export const api = {
     const response = await apiClient.get(`/datasets?${params.toString()}`);
     return response.data;
   },
+  uploadDataset: async (file: File) => {
+    const formData = new FormData();
+    formData.append("file", file);
+    const response = await apiClient.post(`/datasets/upload`, formData, {
+      headers: {
+        "Content-Type": "multipart/form-data"
+      }
+    });
+    return response.data;
+  },
   getExperiments: async (page: number = 1, size: number = 10, search?: string) => {
     const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
     if (search) params.append("search", search);
@@ -106,6 +116,20 @@ export const api = {
   },
   getAdminStats: async () => {
     const response = await apiClient.get(`/admin/stats`);
+    return response.data;
+  },
+  getUsers: async (page: number = 1, size: number = 50, search?: string) => {
+    const params = new URLSearchParams({ page: page.toString(), size: size.toString() });
+    if (search) params.append("search", search);
+    const response = await apiClient.get(`/admin/users?${params.toString()}`);
+    return response.data;
+  },
+  elevateUser: async (userId: string) => {
+    const response = await apiClient.post(`/admin/users/${userId}/elevate`);
+    return response.data;
+  },
+  deleteUser: async (userId: string) => {
+    const response = await apiClient.delete(`/admin/users/${userId}`);
     return response.data;
   },
   

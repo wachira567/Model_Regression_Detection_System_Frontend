@@ -38,12 +38,17 @@ export default function EvalRunsPage() {
   };
 
   const handleTriggerRun = async () => {
+    const featureId = window.prompt("Enter feature ID to evaluate (e.g., email_classifier):", "email_classifier");
+    if (!featureId) return;
+    
     setTriggering(true);
     try {
-      await api.triggerEvalRun("email_classifier");
+      await api.triggerEvalRun(featureId);
       setTimeout(loadRuns, 2000);
-    } catch (e) {
+      alert(`Started evaluation run for ${featureId}`);
+    } catch (e: any) {
       console.error(e);
+      alert(e.response?.data?.detail || "Failed to trigger evaluation");
     } finally {
       setTriggering(false);
     }

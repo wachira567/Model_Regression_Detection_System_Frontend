@@ -4,7 +4,7 @@ import { AuthProvider, useAuth } from './contexts/AuthContext';
 import { TourProvider, useTour } from './contexts/TourContext';
 import TourOverlay from './components/TourOverlay';
 import { USER_DASHBOARD_STEPS } from './lib/tourConfig';
-import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck, Menu, X, Sparkles } from "lucide-react";
+import { LayoutDashboard, FileTerminal, Activity, Database, LogOut, ShieldCheck, Menu, X, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { useState, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 
@@ -60,6 +60,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   const location = useLocation();
   const { startTour, autoStartTour } = useTour();
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isSidebarCollapsed, setIsSidebarCollapsed] = useState(false);
 
   useEffect(() => {
     // Only try to auto-start if we are strictly on a user dashboard page, not admin.
@@ -90,35 +91,39 @@ function MainLayout({ children }: { children: React.ReactNode }) {
     navItems.push({ name: 'Admin', path: '/dashboard/admin', icon: ShieldCheck });
   }
 
-  const SidebarContent = () => (
+  const SidebarContent = ({ isCollapsed = false }: { isCollapsed?: boolean }) => (
     <>
       <div className="p-6">
         <Link to="/" className="flex items-center gap-3">
           <div className="bg-indigo-600 p-2 rounded-xl shadow-sm">
             <Activity className="h-6 w-6 text-white" />
           </div>
-          <span className="font-extrabold text-2xl tracking-tight text-slate-900">MRDS</span>
+          {!isCollapsed && <span className="font-extrabold text-2xl tracking-tight text-slate-900">MRDS</span>}
         </Link>
       </div>
       
-      <div className="px-6 mb-4" data-tour="workspace-selector">
-        <select className="w-full h-10 px-3 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
-          <option>Default Workspace</option>
-          <option>Create New Project...</option>
-        </select>
-      </div>
+      {!isCollapsed && (
+        <div className="px-6 mb-4" data-tour="workspace-selector">
+          <select className="w-full h-10 px-3 bg-slate-100 border border-slate-200 rounded-lg text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500">
+            <option>Default Workspace</option>
+            <option>Create New Project...</option>
+          </select>
+        </div>
+      )}
       
       <div className="flex-1 px-4 py-4 space-y-2 overflow-y-auto" data-tour="sidebar-nav">
-        <div className="text-xs font-bold text-slate-400 uppercase tracking-widest px-4 mb-4 flex justify-between items-center">
-          <span>Menu</span>
-          <button 
-            data-tour="tour-trigger"
-            onClick={() => startTour(USER_DASHBOARD_STEPS, 'user-dashboard')}
-            className="flex items-center gap-1 text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors"
-          >
-            <Sparkles className="w-3 h-3" /> Tour
-          </button>
-        </div>
+        {!isCollapsed && (
+          <div className="text-xs font-bold text-slate-400 uppercase tracking-widest px-4 mb-4 flex justify-between items-center">
+            <span>Menu</span>
+            <button 
+              data-tour="tour-trigger"
+              onClick={() => startTour(USER_DASHBOARD_STEPS, 'user-dashboard')}
+              className="flex items-center gap-1 text-[10px] bg-indigo-50 text-indigo-600 px-2 py-1 rounded-full hover:bg-indigo-100 transition-colors"
+            >
+              <Sparkles className="w-3 h-3" /> Tour
+            </button>
+          </div>
+        )}
         {navItems.map((item) => {
           const Icon = item.icon;
           const isActive = item.path === '/dashboard' 
@@ -130,14 +135,15 @@ function MainLayout({ children }: { children: React.ReactNode }) {
               key={item.path}
               to={item.path}
               onClick={() => setMobileMenuOpen(false)}
-              className={`flex items-center gap-3 px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
+              className={`flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} px-4 py-3 rounded-xl transition-all duration-200 font-medium ${
                 isActive 
                   ? 'bg-indigo-50 text-indigo-700 shadow-sm border border-indigo-100/50' 
                   : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'
               }`}
+              title={isCollapsed ? item.name : undefined}
             >
               <Icon className={`h-5 w-5 ${isActive ? 'text-indigo-600' : 'text-slate-400'}`} />
-              {item.name}
+              {!isCollapsed && item.name}
             </Link>
           );
         })}
@@ -146,10 +152,11 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       <div className="p-4 border-t border-slate-200">
         <button 
           onClick={logout}
-          className="flex items-center gap-3 px-4 py-3 w-full rounded-xl text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition-colors font-medium"
+          className={`flex items-center ${isCollapsed ? 'justify-center' : 'gap-3'} px-4 py-3 w-full rounded-xl text-slate-600 hover:bg-rose-50 hover:text-rose-600 transition-colors font-medium`}
+          title={isCollapsed ? "Logout" : undefined}
         >
           <LogOut className="h-5 w-5" />
-          Logout
+          {!isCollapsed && "Logout"}
         </button>
       </div>
     </>
@@ -158,8 +165,14 @@ function MainLayout({ children }: { children: React.ReactNode }) {
   return (
     <div className="min-h-screen bg-slate-50 flex">
       {/* Desktop Sidebar */}
-      <aside className="hidden md:flex flex-col w-72 bg-white border-r border-slate-200 fixed h-full z-10 shadow-sm">
-        <SidebarContent />
+      <aside className={`hidden md:flex flex-col bg-white border-r border-slate-200 fixed h-full z-10 shadow-sm transition-all duration-300 ${isSidebarCollapsed ? 'w-20' : 'w-72'}`}>
+        <SidebarContent isCollapsed={isSidebarCollapsed} />
+        <button 
+          onClick={() => setIsSidebarCollapsed(!isSidebarCollapsed)}
+          className="absolute -right-3 top-20 bg-white border border-slate-200 shadow-sm rounded-full p-1 text-slate-400 hover:text-slate-600 z-50"
+        >
+          {isSidebarCollapsed ? <ChevronRight className="w-4 h-4" /> : <ChevronLeft className="w-4 h-4" />}
+        </button>
       </aside>
 
       {/* Mobile Topbar */}
@@ -205,7 +218,7 @@ function MainLayout({ children }: { children: React.ReactNode }) {
       </AnimatePresence>
 
       {/* Main Content */}
-      <main className="flex-1 md:ml-72 pt-16 md:pt-0 min-h-screen">
+      <main className={`flex-1 pt-16 md:pt-0 min-h-screen transition-all duration-300 ${isSidebarCollapsed ? 'md:ml-20' : 'md:ml-72'}`}>
         <div className="max-w-6xl mx-auto p-4 sm:p-8">
           <AnimatePresence mode="wait">
             <motion.div
