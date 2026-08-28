@@ -77,5 +77,13 @@ export const api = {
   getAutopilotStats: async () => {
     const response = await apiClient.get(`/autopilot/stats`);
     return response.data;
+  },
+  getFlags: async () => {
+    const response = await apiClient.get(`/flags`);
+    return response.data;
+  },
+  updateFlag: async (flagId: string, updates: any) => {
+    const response = await apiClient.put(`/flags/${flagId}`, updates);
+    return response.data;
   }
 };
