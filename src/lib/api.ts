@@ -73,5 +73,9 @@ export const api = {
   bootstrapDataset: async (featureId: string, daysBack: number = 7, maxCases: number = 50) => {
     const response = await apiClient.post(`/datasets/${featureId}/bootstrap?days_back=${daysBack}&max_cases=${maxCases}`);
     return response.data;
+  },
+  getAutopilotStats: async () => {
+    const response = await apiClient.get(`/autopilot/stats`);
+    return response.data;
   }
 };
