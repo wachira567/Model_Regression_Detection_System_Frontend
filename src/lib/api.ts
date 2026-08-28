@@ -85,5 +85,9 @@ export const api = {
   updateFlag: async (flagId: string, updates: any) => {
     const response = await apiClient.put(`/flags/${flagId}`, updates);
     return response.data;
+  },
+  getEvalTraces: async (evalResultId: string) => {
+    const response = await apiClient.get(`/traces/eval/${evalResultId}`);
+    return response.data;
   }
 };

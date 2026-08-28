@@ -153,13 +153,14 @@ export default function EvalRunDetailPage() {
                           <TableHead className="font-bold text-slate-600">Test Case ID</TableHead>
                           <TableHead className="font-bold text-slate-600">Category Match</TableHead>
                           <TableHead className="font-bold text-slate-600">Relevance</TableHead>
-                          <TableHead className="text-right font-bold text-slate-600 pr-6">Latency</TableHead>
+                          <TableHead className="text-right font-bold text-slate-600">Latency</TableHead>
+                          <TableHead className="text-right font-bold text-slate-600 pr-6">Actions</TableHead>
                         </TableRow>
                       </TableHeader>
                       <TableBody>
                         {displayResults.length === 0 ? (
                           <TableRow>
-                            <TableCell colSpan={5} className="text-center text-slate-500 py-12 font-medium">
+                            <TableCell colSpan={6} className="text-center text-slate-500 py-12 font-medium">
                               No test cases in this view.
                             </TableCell>
                           </TableRow>
@@ -194,8 +195,15 @@ export default function EvalRunDetailPage() {
                                   {res.relevance_score} / 5
                                 </span>
                               </TableCell>
-                              <TableCell className="text-right pr-6 font-mono font-medium text-slate-600">
+                              <TableCell className="text-right font-mono font-medium text-slate-600">
                                 {(res.latency_ms || 0).toFixed(0)}ms
+                              </TableCell>
+                              <TableCell className="text-right pr-6">
+                                {res.status === "fail" && (
+                                  <Button variant="outline" size="sm" onClick={() => navigate(`/dashboard/traces/${res.id}`)} className="h-8 rounded-lg font-bold text-rose-600 border-rose-200 hover:bg-rose-50">
+                                    View Trace
+                                  </Button>
+                                )}
                               </TableCell>
                             </TableRow>
                           ))

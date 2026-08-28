@@ -15,6 +15,7 @@ import ExperimentsPage from "./pages/ExperimentsPage";
 import ExperimentDetailPage from "./pages/ExperimentDetailPage";
 import CostPilotPage from "./pages/CostPilotPage";
 import FeatureFlagsPage from "./pages/FeatureFlagsPage";
+import TraceExplorerPage from "./pages/TraceExplorerPage";
 import TourGuide from "./components/TourGuide";
 
 // Public Pages
@@ -202,6 +203,7 @@ function App() {
                     <Route path="/flags" element={<FeatureFlagsPage />} />
                     <Route path="/experiments" element={<ExperimentsPage />} />
                     <Route path="/experiments/:id" element={<ExperimentDetailPage />} />
+                    <Route path="/traces/:id" element={<TraceExplorerPage />} />
                     <Route path="/analytics" element={<AnalyticsPage />} />
                     <Route path="/prompts" element={<PromptsPage />} />
                     <Route path="/datasets" element={<DatasetsPage />} />
