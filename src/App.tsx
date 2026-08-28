@@ -12,7 +12,7 @@ import TourGuide from "./components/TourGuide";
 
 import LoginPage from "./pages/LoginPage";
 
-const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID || "placeholder-client-id.apps.googleusercontent.com";
+const GOOGLE_CLIENT_ID = import.meta.env.VITE_GOOGLE_CLIENT_ID;
 
 // Protected Route Wrapper
 function ProtectedRoute({ children }: { children: React.ReactElement }) {
