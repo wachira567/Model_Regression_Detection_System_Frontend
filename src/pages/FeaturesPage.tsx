@@ -1,11 +1,10 @@
-import { motion } from 'framer-motion';
 import { ShieldCheck, Zap, Database, GitBranch, Target, Cpu } from 'lucide-react';
+import { FadeInOnScroll } from '../lib/AnimationUtils';
+import { Button } from '../components/ui/button';
+import { useNavigate } from 'react-router-dom';
 
 export default function FeaturesPage() {
-  const fadeInUp = {
-    hidden: { opacity: 0, y: 30 },
-    visible: { opacity: 1, y: 0, transition: { duration: 0.6, ease: "easeOut" } }
-  };
+  const navigate = useNavigate();
 
   const features = [
     {
@@ -53,73 +52,64 @@ export default function FeaturesPage() {
   ];
 
   return (
-    <div className="pt-24 pb-32">
+    <div className="pt-24 pb-32 overflow-hidden">
       <div className="max-w-7xl mx-auto px-6">
         
         {/* Header */}
-        <motion.div 
-          initial="hidden"
-          animate="visible"
-          variants={fadeInUp}
-          className="text-center max-w-3xl mx-auto mb-20"
-        >
-          <h1 className="text-4xl md:text-6xl font-bold tracking-tight text-slate-900 mb-6">
-            Powerful features.<br />Beautifully simple.
+        <FadeInOnScroll className="text-center max-w-3xl mx-auto mb-32 mt-16">
+          <h1 className="text-5xl md:text-7xl font-extrabold tracking-tight text-slate-900 mb-8 leading-[1.1]">
+            Powerful features.<br />
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-400 to-slate-600">Beautifully simple.</span>
           </h1>
-          <p className="text-xl text-slate-500">
+          <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
             MRDS provides a comprehensive suite of tools designed to ensure your generative AI applications never degrade in production.
           </p>
-        </motion.div>
+        </FadeInOnScroll>
 
         {/* Features Grid */}
         <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
           {features.map((feature, i) => (
-            <motion.div
-              key={i}
-              initial="hidden"
-              whileInView="visible"
-              viewport={{ once: true, margin: "-50px" }}
-              variants={{
-                hidden: { opacity: 0, y: 30 },
-                visible: { opacity: 1, y: 0, transition: { duration: 0.5, delay: i * 0.1 } }
-              }}
-              className="bg-white rounded-3xl p-8 border border-slate-100 shadow-sm hover:shadow-lg transition-all duration-300 group"
-            >
-              <div className={`w-16 h-16 rounded-2xl ${feature.color} ${feature.border} border flex items-center justify-center mb-6 group-hover:scale-110 transition-transform duration-300`}>
-                {feature.icon}
+            <FadeInOnScroll key={i} delay={i * 0.1}>
+              <div className="bg-white rounded-3xl p-10 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group h-full cursor-default">
+                <div className={`w-16 h-16 rounded-2xl ${feature.color} ${feature.border} border flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}>
+                  {feature.icon}
+                </div>
+                <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
+                <p className="text-slate-500 leading-relaxed text-lg">
+                  {feature.description}
+                </p>
               </div>
-              <h3 className="text-xl font-bold text-slate-900 mb-3">{feature.title}</h3>
-              <p className="text-slate-500 leading-relaxed">
-                {feature.description}
-              </p>
-            </motion.div>
+            </FadeInOnScroll>
           ))}
         </div>
 
         {/* Architecture Section */}
-        <motion.div 
-          initial="hidden"
-          whileInView="visible"
-          viewport={{ once: true }}
-          variants={fadeInUp}
-          className="mt-32 bg-slate-900 rounded-[3rem] p-12 text-center text-white overflow-hidden relative"
-        >
-          <div className="absolute top-0 right-0 w-64 h-64 bg-indigo-500 rounded-full blur-[100px] opacity-20 translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-64 h-64 bg-emerald-500 rounded-full blur-[100px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
+        <FadeInOnScroll className="mt-40 bg-slate-900 rounded-[3rem] p-12 md:p-24 text-center text-white overflow-hidden relative shadow-2xl">
+          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500 rounded-full blur-[150px] opacity-30 translate-x-1/2 -translate-y-1/2"></div>
+          <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-[150px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
           
-          <h2 className="text-3xl md:text-4xl font-bold mb-6 relative z-10">Built on modern architecture</h2>
-          <p className="text-slate-400 max-w-2xl mx-auto text-lg mb-12 relative z-10">
-            Powered by FastAPI, PostgreSQL, and React. Engineered for lightning-fast evaluations and massive scalability.
+          <h2 className="text-4xl md:text-6xl font-bold mb-8 relative z-10 tracking-tight">Built on modern architecture</h2>
+          <p className="text-slate-400 max-w-3xl mx-auto text-xl mb-16 relative z-10 font-medium leading-relaxed">
+            Powered by FastAPI, PostgreSQL, and React. Engineered for lightning-fast evaluations and massive scalability from day one.
           </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-4 relative z-10">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
             {['FastAPI Backend', 'Async PostgreSQL', 'Vite & React 19', 'Framer Motion'].map((tech, i) => (
-              <div key={i} className="bg-slate-800/50 backdrop-blur-sm border border-slate-700 p-4 rounded-2xl font-medium text-slate-300">
+              <div key={i} className="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-6 rounded-2xl font-semibold text-slate-300 hover:bg-slate-700/50 transition-colors text-lg">
                 {tech}
               </div>
             ))}
           </div>
-        </motion.div>
+        </FadeInOnScroll>
+
+        {/* CTA */}
+        <FadeInOnScroll className="mt-32 text-center bg-indigo-50 rounded-[3rem] p-12 md:p-24 border border-indigo-100">
+          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Ready to see it in action?</h2>
+          <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">Start evaluating your models with MRDS today. It's completely free during our open beta.</p>
+          <Button onClick={() => navigate('/login')} className="h-16 px-12 bg-indigo-600 text-white hover:bg-indigo-700 rounded-full font-bold text-xl shadow-lg hover:shadow-indigo-600/30 hover:-translate-y-1 transition-all">
+            Get Started Free
+          </Button>
+        </FadeInOnScroll>
 
       </div>
     </div>
