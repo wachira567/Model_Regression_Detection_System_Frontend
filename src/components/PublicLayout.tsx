@@ -19,13 +19,13 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
   return (
     <div className="min-h-screen bg-white text-slate-900 font-sans selection:bg-indigo-100 selection:text-indigo-900 flex flex-col">
       {/* Global Public Navigation */}
-      <nav className="fixed w-full top-0 z-50 bg-white/80 backdrop-blur-xl border-b border-slate-100 transition-all">
+      <nav className="fixed w-full top-0 z-50 bg-white/70 backdrop-blur-2xl border-b border-white/20 shadow-[0_4px_30px_rgba(0,0,0,0.02)] transition-all">
         <div className="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
           <Link to="/" className="flex items-center gap-2 group">
-            <div className="bg-slate-900 p-1.5 rounded-lg group-hover:bg-indigo-600 transition-colors duration-300 group-hover:scale-105">
+            <div className="bg-slate-900 p-1.5 rounded-lg group-hover:bg-indigo-600 group-hover:shadow-[0_0_15px_rgba(79,70,229,0.5)] transition-all duration-300 group-hover:scale-105">
               <Activity className="h-5 w-5 text-white" />
             </div>
-            <span className="font-bold text-xl tracking-tight text-slate-900">MRDS</span>
+            <span className="font-bold text-xl tracking-tight text-slate-900 group-hover:text-indigo-600 transition-colors">MRDS</span>
           </Link>
           
           {/* Desktop Nav */}
@@ -34,7 +34,7 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
               <Link 
                 key={link.path}
                 to={link.path} 
-                className={`text-sm font-medium transition-colors hover:text-slate-900 ${location.pathname === link.path ? 'text-slate-900' : 'text-slate-500'}`}
+                className={`text-sm font-semibold transition-colors hover:text-slate-900 ${location.pathname === link.path ? 'text-indigo-600' : 'text-slate-500'}`}
               >
                 {link.name}
               </Link>
@@ -42,15 +42,18 @@ export default function PublicLayout({ children }: { children: React.ReactNode }
           </div>
 
           <div className="hidden md:flex items-center gap-4">
-            <Link to="/login" className="text-sm font-medium text-slate-600 hover:text-slate-900 transition-colors">
+            <Link to="/login" className="text-sm font-bold text-slate-500 hover:text-slate-900 transition-colors">
               Log in
             </Link>
-            <Button 
-              onClick={() => navigate('/login')} 
-              className="bg-slate-900 text-white hover:bg-slate-800 rounded-full px-6 transition-all duration-300 hover:scale-105 active:scale-95 shadow-sm"
-            >
-              Get Started Free
-            </Button>
+            <div className="relative group">
+              <div className="absolute -inset-1 bg-gradient-to-r from-indigo-500 to-emerald-500 rounded-full blur opacity-0 group-hover:opacity-75 transition duration-500 group-hover:duration-200"></div>
+              <Button 
+                onClick={() => navigate('/login')} 
+                className="relative bg-slate-900 text-white hover:bg-slate-800 rounded-full px-6 transition-all duration-300 shadow-sm"
+              >
+                Get Started Free
+              </Button>
+            </div>
           </div>
 
           {/* Mobile Hamburger */}
