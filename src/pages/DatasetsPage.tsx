@@ -40,10 +40,16 @@ export default function DatasetsPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Golden Datasets</h1>
           <p className="text-slate-500 mt-2 text-lg">Manage the ground truth test cases used for your evaluations.</p>
         </div>
-        <Button className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
-          <Plus className="h-5 w-5" />
-          Upload Dataset
-        </Button>
+        <div className="flex gap-3 w-full sm:w-auto">
+          <Button variant="outline" className="gap-2 h-12 px-6 border-emerald-200 text-emerald-700 hover:bg-emerald-50 rounded-xl font-bold transition-all w-full sm:w-auto" onClick={() => alert("Simulating Bootstrap: Harvesting from production logs...")}>
+            <UploadCloud className="h-5 w-5 text-emerald-600" />
+            Bootstrap from Logs
+          </Button>
+          <Button className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+            <Plus className="h-5 w-5" />
+            Upload Dataset
+          </Button>
+        </div>
       </div>
 
       <Card className="border-none shadow-sm bg-white overflow-hidden rounded-3xl">

@@ -69,5 +69,9 @@ export const api = {
   getAnalyticsTrends: async (days: number = 7) => {
     const response = await apiClient.get(`/reports/analytics/trends?days=${days}`);
     return response.data;
+  },
+  bootstrapDataset: async (featureId: string, daysBack: number = 7, maxCases: number = 50) => {
+    const response = await apiClient.post(`/datasets/${featureId}/bootstrap?days_back=${daysBack}&max_cases=${maxCases}`);
+    return response.data;
   }
 };
