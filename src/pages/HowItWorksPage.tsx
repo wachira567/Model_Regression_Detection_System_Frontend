@@ -8,13 +8,13 @@ export default function HowItWorksPage() {
 
   const steps = [
     {
-      icon: <Database className="w-8 h-8 text-white" />,
-      color: "bg-indigo-500",
-      title: "1. Dataset Ingestion Pipeline",
-      description: "Leveraging PostgreSQL and background workers, MRDS securely ingests ground truth data. A Golden Dataset contains the prompt, the expected output, and metadata for granular analytics.",
-      code: `// Example Dataset format
+      icon: <Database className="w-6 h-6 text-white" strokeWidth={1.5} />,
+      title: "01 / Ingestion Pipeline",
+      description: "Securely ingest ground truth data directly from your production logs or cloud buckets. Our enterprise data connectors automatically bootstrap Golden Datasets for granular analytics.",
+      code: `// Enterprise payload structure
 [
   {
+    "trace_id": "req_8f73b...",
     "prompt": "Summarize this email...",
     "expected_output": "The client wants a meeting...",
     "category": "summarization"
@@ -22,80 +22,70 @@ export default function HowItWorksPage() {
 ]`
     },
     {
-      icon: <Play className="w-8 h-8 text-white" />,
-      color: "bg-amber-500",
-      title: "2. Async Evaluation Triggers",
-      description: "FastAPI endpoints allow for programmatic triggering of evaluation runs. Background tasks handle the LLM invocations asynchronously, enabling massive concurrent processing.",
-      code: `$ curl -X POST https://api.mrds.dev/v1/eval-runs \\
-  -H "Authorization: Bearer $MRDS_API_KEY" \\
-  -d '{"dataset_id": "ds_123", "model": "gpt-4"}'`
+      icon: <Play className="w-6 h-6 text-white" strokeWidth={1.5} />,
+      title: "02 / Automated CI/CD Hooks",
+      description: "Trigger evaluation runs programmatically from GitHub Actions, GitLab CI, or Jenkins. Our high-throughput async engine handles massive concurrent LLM invocations across multiple providers.",
+      code: `$ curl -X POST https://api.antigravity.systems/v1/evals \\
+  -H "Authorization: Bearer $AG_API_KEY" \\
+  -d '{"dataset_id": "ds_prod_123", "target_model": "gpt-4o"}'`
     },
     {
-      icon: <AlertCircle className="w-8 h-8 text-white" />,
-      color: "bg-emerald-500",
-      title: "3. Semantic Grading & Tracing",
-      description: "Using LLM-as-a-judge and semantic similarity algorithms, outputs are graded. The Trace Explorer visualizes the exact execution graph, identifying where prompt drift occurred.",
-      code: `Run completed.
-Score: 82% (Threshold: 90%)
+      icon: <AlertCircle className="w-6 h-6 text-white" strokeWidth={1.5} />,
+      title: "03 / Semantic Auditing & Blocking",
+      description: "Antigravity grades outputs using deterministic metrics and LLM-as-a-judge heuristics. If a hallucination or performance regression is detected, the deployment is automatically blocked.",
+      code: `Evaluation Completed.
+Score: 82% (Critical Threshold: 90%)
 Result: FAILED. 
-Drift detected in category: 'summarization'`
+Action: Deployment blocked. Drift detected in 'summarization'.`
     }
   ];
 
   return (
-    <div className="pt-24 pb-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className="min-h-screen bg-black text-white pt-32 pb-32 selection:bg-white selection:text-black">
+      <div className="max-w-7xl mx-auto px-8">
         
-        <FadeInOnScroll className="text-center max-w-3xl mx-auto mb-32 mt-16">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
-            Architecture &<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-900">Data Flow.</span>
+        <FadeInOnScroll className="mb-32">
+          <h1 className="text-5xl md:text-8xl font-medium tracking-tighter mb-8 leading-[0.9]">
+            The deployment<br />
+            <span className="text-slate-500">workflow.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
-            A transparent look at the underlying systems and integration points powering the MRDS platform.
+          <p className="text-xl md:text-3xl text-slate-400 font-normal leading-relaxed max-w-3xl">
+            A transparent look at how Antigravity integrates directly into your existing CI/CD pipelines to protect your production environment.
           </p>
         </FadeInOnScroll>
 
-        <div className="max-w-4xl mx-auto relative">
-          {/* Vertical line */}
-          <div className="absolute left-12 top-10 bottom-10 w-1 bg-slate-100 rounded-full hidden md:block"></div>
-
+        <div className="max-w-5xl">
           {steps.map((step, i) => (
-            <FadeInOnScroll key={i} delay={0.2} className="relative mb-24 last:mb-0">
-              <div className="flex flex-col md:flex-row gap-8 md:gap-16">
-                <div className="md:w-24 shrink-0 flex justify-center z-10 hidden md:flex">
-                  <div className={`w-16 h-16 rounded-full ${step.color} shadow-lg flex items-center justify-center border-4 border-white`}>
-                    {step.icon}
-                  </div>
-                </div>
+            <FadeInOnScroll key={i} delay={0.1} className="relative mb-24 last:mb-0">
+              <div className="grid md:grid-cols-12 gap-8 md:gap-16 items-start">
                 
-                <div className="flex-1 bg-white p-10 rounded-[2rem] shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-100">
-                  <div className="md:hidden flex items-center gap-4 mb-6">
-                    <div className={`w-12 h-12 rounded-full ${step.color} shadow-lg flex items-center justify-center`}>
-                      {step.icon}
-                    </div>
+                {/* Step Title & Icon */}
+                <div className="md:col-span-5 flex flex-col pt-2 border-t border-white/20">
+                  <div className="flex items-center gap-4 mb-6 mt-4">
+                    {step.icon}
+                    <h2 className="text-2xl font-medium tracking-tight text-white">{step.title}</h2>
                   </div>
-                  
-                  <h2 className="text-3xl font-bold text-slate-900 mb-4">{step.title}</h2>
-                  <p className="text-lg text-slate-500 mb-8 leading-relaxed">
+                  <p className="text-lg text-slate-400 leading-relaxed pr-8">
                     {step.description}
                   </p>
-                  
-                  <div className="bg-slate-900 rounded-2xl p-6 overflow-x-auto">
-                    <pre className="text-sm font-mono text-emerald-400">
-                      <code>{step.code}</code>
-                    </pre>
-                  </div>
                 </div>
+                
+                {/* Code Block */}
+                <div className="md:col-span-7 bg-[#050505] p-8 border border-white/10 w-full overflow-x-auto">
+                  <pre className="text-sm font-mono text-slate-300 leading-loose">
+                    <code>{step.code}</code>
+                  </pre>
+                </div>
+
               </div>
             </FadeInOnScroll>
           ))}
         </div>
 
-        <FadeInOnScroll className="mt-40 text-center">
-          <Button onClick={() => navigate('/login')} className="h-16 px-12 bg-slate-900 text-white hover:bg-slate-800 rounded-full font-bold text-xl shadow-xl hover:-translate-y-1 transition-all group">
-            Explore the Dashboard
-            <ArrowRight className="ml-3 h-6 w-6 transition-transform group-hover:translate-x-1" />
+        <FadeInOnScroll className="mt-32 border-t border-white/20 pt-24 text-center">
+          <Button onClick={() => navigate('/login')} className="h-14 px-12 bg-white text-black hover:bg-slate-200 rounded-none font-medium text-lg group">
+            Integrate Now
+            <ArrowRight className="ml-3 h-5 w-5 transition-transform group-hover:translate-x-1" />
           </Button>
         </FadeInOnScroll>
 

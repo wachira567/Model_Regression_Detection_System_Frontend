@@ -1,67 +1,70 @@
 import { FadeInOnScroll } from '../lib/AnimationUtils';
-import { Heart, Globe, Shield, Code2 } from 'lucide-react';
 
 export default function AboutPage() {
   return (
-    <div className="pt-24 pb-32">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className="min-h-screen bg-black text-white pt-32 pb-32 selection:bg-white selection:text-black">
+      <div className="max-w-7xl mx-auto">
         
-        <FadeInOnScroll className="text-center max-w-4xl mx-auto mb-32 mt-16">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
+        <FadeInOnScroll className="px-8 max-w-5xl mb-32">
+          <h1 className="text-5xl md:text-8xl font-medium tracking-tighter mb-8 leading-[0.9]">
             We believe AI should<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-600 to-slate-900">be deterministic.</span>
+            <span className="text-slate-500">be deterministic.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
-            This project was built to explore the intersection of full-stack engineering and AI observability. It aims to bring traditional software testing rigor to generative AI through a modern, scalable architecture.
+          <p className="text-xl md:text-3xl text-slate-400 font-normal leading-relaxed max-w-3xl">
+            Antigravity was built to bridge the gap between generative AI and traditional software engineering rigor. We deliver enterprise-grade observability and CI/CD pipelines to ensure your models perform safely and reliably at scale.
           </p>
         </FadeInOnScroll>
 
-        <FadeInOnScroll className="mb-32">
-          <div className="w-full h-96 bg-slate-900 rounded-[3rem] overflow-hidden relative flex items-center justify-center group">
-            <div className="absolute inset-0 bg-gradient-to-br from-slate-500/20 to-slate-900/20 mix-blend-overlay"></div>
-            {/* Abstract visual */}
-            <div className="w-full h-full opacity-30 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-white via-slate-900 to-slate-900 group-hover:scale-110 transition-transform duration-1000"></div>
-            <div className="absolute font-black text-4xl md:text-6xl text-white tracking-widest uppercase">Built from Scratch</div>
+        <FadeInOnScroll className="mb-32 px-8">
+          <div className="w-full h-px bg-white/20 mb-8" />
+          <div className="w-full h-96 relative flex items-center justify-center border border-white/10 bg-[#050505]">
+            <div className="absolute inset-0 bg-gradient-to-b from-black/20 to-black/80 z-10" />
+            <video 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="w-full h-full object-cover opacity-30 mix-blend-luminosity"
+            >
+              <source src="https://assets.mixkit.co/videos/preview/mixkit-abstract-digital-grid-of-squares-25254-large.mp4" type="video/mp4" />
+            </video>
+            <div className="absolute z-20 font-medium text-4xl md:text-6xl text-white tracking-tight">ENGINEERED FOR PRODUCTION</div>
           </div>
         </FadeInOnScroll>
 
-        <div className="max-w-4xl mx-auto">
-          <FadeInOnScroll className="mb-16 text-center">
-            <h2 className="text-3xl font-black text-slate-900 mb-4">Design Principles</h2>
-            <p className="text-lg text-slate-500">The core technical pillars behind this portfolio project.</p>
+        <div className="max-w-7xl mx-auto px-8">
+          <FadeInOnScroll className="mb-16">
+            <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-4">Core Principles</h2>
+            <div className="h-px bg-white/20 w-full mt-8" />
           </FadeInOnScroll>
 
-          <div className="grid md:grid-cols-2 gap-8">
+          <div className="grid md:grid-cols-2 gap-x-16 gap-y-16">
             {[
               {
-                icon: <Shield className="w-6 h-6 text-emerald-500" />,
+                id: "01",
                 title: "Engineering Rigor",
-                desc: "Built to demonstrate complex state management, data integrity, and high-performance background processing with FastAPI and PostgreSQL."
+                desc: "We enforce strict testing methodologies. By integrating seamlessly into your CI/CD pipeline, we catch hallucinations and regressions before they reach your customers."
               },
               {
-                icon: <Globe className="w-6 h-6 text-blue-500" />,
-                title: "Scalable Architecture",
-                desc: "Implementing advanced patterns like Semantic Caching and dynamic Model Routing to showcase deep architectural understanding."
+                id: "02",
+                title: "Enterprise Scale",
+                desc: "Designed to handle high-throughput workloads with advanced patterns like Semantic Caching, dynamic Model Routing, and global edge deployments."
               },
               {
-                icon: <Heart className="w-6 h-6 text-rose-500" />,
-                title: "Open Source",
-                desc: "This entire project is open-source. It serves as a transparent portfolio piece for anyone to explore, critique, and learn from."
+                id: "03",
+                title: "Security & Governance",
+                desc: "Your data remains yours. With SSO, Role-Based Access Control, and strict human-in-the-loop audit trails, we meet the highest compliance standards."
               },
               {
-                icon: <Code2 className="w-6 h-6 text-indigo-500" />,
-                title: "Modern UX/UI",
-                desc: "Prioritizing clean, dynamic interfaces using React, Tailwind CSS, and Framer Motion to create a premium, intuitive experience."
+                id: "04",
+                title: "Maximizing ROI",
+                desc: "Generative AI is expensive. Our platform automatically optimizes prompt token usage and routes to cost-effective models without sacrificing accuracy."
               }
             ].map((value, i) => (
-              <FadeInOnScroll key={i} delay={i * 0.1}>
-                <div className="bg-slate-50 p-8 rounded-3xl border border-slate-100">
-                  <div className="w-12 h-12 bg-white rounded-2xl flex items-center justify-center mb-6 shadow-sm">
-                    {value.icon}
-                  </div>
-                  <h3 className="text-xl font-bold text-slate-900 mb-3">{value.title}</h3>
-                  <p className="text-slate-500">{value.desc}</p>
-                </div>
+              <FadeInOnScroll key={i} delay={i * 0.1} className="flex flex-col border-l border-white/20 pl-8">
+                <span className="text-xs font-mono text-slate-500 mb-6">{value.id}</span>
+                <h3 className="text-2xl font-medium tracking-tight text-white mb-4">{value.title}</h3>
+                <p className="text-slate-400 text-lg leading-relaxed">{value.desc}</p>
               </FadeInOnScroll>
             ))}
           </div>

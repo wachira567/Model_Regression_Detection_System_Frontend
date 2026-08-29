@@ -8,94 +8,88 @@ export default function FeaturesPage() {
 
   const features = [
     {
-      icon: <Database className="w-8 h-8 text-indigo-500" />,
-      title: "Golden Datasets",
-      description: "Implementing background workers to automatically bootstrap test datasets from production logs, demonstrating robust data curation.",
-      color: "bg-indigo-50",
-      border: "border-indigo-100"
+      id: "F.01",
+      icon: <Database className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
+      title: "Automated Golden Datasets",
+      description: "Automatically bootstrap test datasets from production logs. Curate ground-truth data continuously without manual engineering overhead."
     },
     {
-      icon: <Target className="w-8 h-8 text-blue-500" />,
+      id: "F.02",
+      icon: <Target className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
       title: "A/B Prompt Testing",
-      description: "Demonstrating statistical analysis and variant routing logic to safely measure prompt performance across different LLM configurations.",
-      color: "bg-blue-50",
-      border: "border-blue-100"
+      description: "Safely measure prompt performance across different LLM configurations. Deploy variants to fractional traffic and measure statistical impact."
     },
     {
-      icon: <Zap className="w-8 h-8 text-amber-500" />,
+      id: "F.03",
+      icon: <Zap className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
       title: "Semantic Caching",
-      description: "Showcasing vector-based semantic caching logic to cut down LLM API costs while maintaining high-performance response times.",
-      color: "bg-amber-50",
-      border: "border-amber-100"
+      description: "Slash LLM API costs by up to 40% with vector-based semantic caching, while dramatically reducing latency for end users."
     },
     {
-      icon: <ShieldCheck className="w-8 h-8 text-emerald-500" />,
-      title: "LLM Cost Autopilot",
-      description: "Building dynamic routing heuristics to intelligently send simpler queries to faster models, and complex ones to reasoning models.",
-      color: "bg-emerald-50",
-      border: "border-emerald-100"
+      id: "F.04",
+      icon: <ShieldCheck className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
+      title: "Cost Autopilot",
+      description: "Dynamic routing heuristics intelligently send simpler queries to faster, cheaper models, reserving complex reasoning models for edge cases."
     },
     {
-      icon: <GitBranch className="w-8 h-8 text-purple-500" />,
+      id: "F.05",
+      icon: <GitBranch className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
       title: "AI Feature Flags",
-      description: "Implementing a surgical rollout system with instance-level control, incremental traffic routing, and instant kill-switches.",
-      color: "bg-purple-50",
-      border: "border-purple-100"
+      description: "Surgical rollout systems with instance-level control. Gradually expose new models or prompts with instant kill-switches."
     },
     {
-      icon: <Cpu className="w-8 h-8 text-rose-500" />,
+      id: "F.06",
+      icon: <Cpu className="w-6 h-6 text-slate-400" strokeWidth={1.5} />,
       title: "Failure Forensics",
-      description: "Creating a visual trace explorer that parses and presents complex execution graphs to pinpoint exactly why an evaluation failed.",
-      color: "bg-rose-50",
-      border: "border-rose-100"
+      description: "Visual trace explorer parses and presents complex execution graphs. Pinpoint the exact node and token where an evaluation failed."
     }
   ];
 
   return (
-    <div className="pt-24 pb-32 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-6">
+    <div className="min-h-screen bg-black text-white pt-32 pb-32 selection:bg-white selection:text-black">
+      <div className="max-w-7xl mx-auto px-8">
         
         {/* Header */}
-        <FadeInOnScroll className="text-center max-w-3xl mx-auto mb-32 mt-16">
-          <h1 className="text-5xl md:text-7xl font-black tracking-tight text-slate-900 mb-8 leading-[1.1]">
-            Engineered for scale.<br />
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-slate-500 to-slate-800">Built for developers.</span>
+        <FadeInOnScroll className="mb-24">
+          <h1 className="text-5xl md:text-8xl font-medium tracking-tighter mb-8 leading-[0.9]">
+            Engineered to scale.<br />
+            <span className="text-slate-500">Built for enterprise.</span>
           </h1>
-          <p className="text-xl md:text-2xl text-slate-500 font-medium leading-relaxed">
-            A showcase of full-stack engineering, demonstrating modern approaches to AI observability, automated evaluation, and backend scaling.
+          <p className="text-xl md:text-3xl text-slate-400 font-normal leading-relaxed max-w-3xl">
+            A comprehensive suite of observability and CI/CD tools designed to protect revenue, reduce API costs, and guarantee LLM reliability in production.
           </p>
         </FadeInOnScroll>
 
-        {/* Features Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
-          {features.map((feature, i) => (
-            <FadeInOnScroll key={i} delay={i * 0.1}>
-              <div className="bg-white rounded-3xl p-10 border border-slate-100 shadow-[0_8px_30px_rgb(0,0,0,0.04)] hover:shadow-xl hover:-translate-y-2 transition-all duration-300 group h-full cursor-default">
-                <div className={`w-16 h-16 rounded-2xl ${feature.color} ${feature.border} border flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300`}>
+        {/* Features Structural Layout */}
+        <div className="border-t border-white/20">
+          <div className="grid md:grid-cols-2 lg:grid-cols-3">
+            {features.map((feature, i) => (
+              <FadeInOnScroll key={i} delay={i * 0.05} className="border-b border-r border-white/10 p-8 md:p-12 flex flex-col justify-between min-h-[350px] hover:bg-white/[0.02] transition-colors">
+                <div className="flex items-center justify-between mb-8">
+                  <span className="text-xs font-mono text-slate-500">{feature.id}</span>
                   {feature.icon}
                 </div>
-                <h3 className="text-2xl font-bold text-slate-900 mb-4">{feature.title}</h3>
-                <p className="text-slate-500 leading-relaxed text-lg">
-                  {feature.description}
-                </p>
-              </div>
-            </FadeInOnScroll>
-          ))}
+                <div>
+                  <h3 className="text-2xl font-medium tracking-tight text-white mb-4">{feature.title}</h3>
+                  <p className="text-slate-400 leading-relaxed text-lg">
+                    {feature.description}
+                  </p>
+                </div>
+              </FadeInOnScroll>
+            ))}
+          </div>
         </div>
 
         {/* Architecture Section */}
-        <FadeInOnScroll className="mt-40 bg-slate-900 rounded-[3rem] p-12 md:p-24 text-center text-white overflow-hidden relative shadow-2xl">
-          <div className="absolute top-0 right-0 w-96 h-96 bg-indigo-500 rounded-full blur-[150px] opacity-30 translate-x-1/2 -translate-y-1/2"></div>
-          <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-500 rounded-full blur-[150px] opacity-20 -translate-x-1/2 translate-y-1/2"></div>
-          
-          <h2 className="text-4xl md:text-6xl font-black mb-8 relative z-10 tracking-tight">Built on modern architecture</h2>
-          <p className="text-slate-400 max-w-3xl mx-auto text-xl mb-16 relative z-10 font-medium leading-relaxed">
-            Powered by FastAPI, PostgreSQL, and React. Engineered to demonstrate real-world patterns like background task queues and multi-tenant data modeling.
+        <FadeInOnScroll className="mt-32 border border-white/10 p-12 md:p-24 text-center bg-[#050505]">
+          <h2 className="text-3xl md:text-5xl font-medium tracking-tight mb-6">Uncompromising Architecture</h2>
+          <p className="text-slate-400 max-w-3xl mx-auto text-lg md:text-xl mb-16 leading-relaxed">
+            Powered by high-throughput async data pipelines and multi-tenant security layers. We integrate seamlessly with your existing VPCs and identity providers.
           </p>
           
-          <div className="grid grid-cols-2 md:grid-cols-4 gap-6 relative z-10">
-            {['FastAPI Backend', 'Async PostgreSQL', 'Vite & React 19', 'Framer Motion'].map((tech, i) => (
-              <div key={i} className="bg-slate-800/50 backdrop-blur-md border border-slate-700 p-6 rounded-2xl font-semibold text-slate-300 hover:bg-slate-700/50 transition-colors text-lg">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-px bg-white/10 border border-white/10">
+            {['SOC2 Compliant Design', 'RBAC & SSO', 'VPC Peering', 'Zero Data Retention'].map((tech, i) => (
+              <div key={i} className="bg-[#050505] p-6 text-sm font-mono text-slate-300">
                 {tech}
               </div>
             ))}
@@ -103,11 +97,13 @@ export default function FeaturesPage() {
         </FadeInOnScroll>
 
         {/* CTA */}
-        <FadeInOnScroll className="mt-32 text-center bg-indigo-50 rounded-[3rem] p-12 md:p-24 border border-indigo-100">
-          <h2 className="text-4xl md:text-5xl font-bold text-slate-900 mb-6">Ready to see it in action?</h2>
-          <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">Start evaluating your models with MRDS today. It's completely free during our open beta.</p>
-          <Button onClick={() => navigate('/login')} className="h-16 px-12 bg-indigo-600 text-white hover:bg-indigo-700 rounded-full font-bold text-xl shadow-lg hover:shadow-indigo-600/30 hover:-translate-y-1 transition-all">
-            Get Started Free
+        <FadeInOnScroll className="mt-32 p-12 md:p-24 border border-white/10 bg-white text-black text-center flex flex-col items-center">
+          <h2 className="text-4xl md:text-6xl font-medium tracking-tight mb-6">Deploy with confidence.</h2>
+          <p className="text-xl text-slate-600 mb-10 max-w-2xl mx-auto">
+            Protect your brand and bottom line. Start evaluating your models with Antigravity today.
+          </p>
+          <Button onClick={() => navigate('/login')} className="h-14 px-12 bg-black text-white hover:bg-slate-800 rounded-none font-medium text-lg">
+            Request Enterprise Demo
           </Button>
         </FadeInOnScroll>
 
