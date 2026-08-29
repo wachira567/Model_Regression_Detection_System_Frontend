@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Loader2, Mail, KeyRound, Sparkles } from 'lucide-react';
+import { Loader2, Mail, KeyRound, Shield } from 'lucide-react';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 
@@ -164,7 +164,8 @@ export default function LandingPage() {
                     <Button type="submit" className="h-12 px-8 bg-white text-black hover:bg-slate-200 rounded-none font-medium" disabled={loading || otpCode.length !== 6}>
                       {loading ? <Loader2 className="h-4 w-4 animate-spin" /> : 'Verify'}
                     </Button>
-                  </form>
+                  </div>
+                </form>
               )}
               {message && <div className="mt-4 text-red-400 text-sm">{message}</div>}
             </div>
