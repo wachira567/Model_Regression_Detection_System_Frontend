@@ -1,6 +1,13 @@
 # Model Regression Detection System (MRDS) - Frontend
 
-This is the React frontend for the Model Regression Detection System (MRDS). It provides an enterprise-grade dashboard to manage LLM Prompts, Golden Datasets, Evaluation Runs, and Analytics.
+**The Human-in-the-Loop (HITL) Dashboard for AI Automation Workflows**
+
+This is the React frontend for the Model Regression Detection System (MRDS). It serves as the command center for your organization's AI operations, empowering Automation Specialists and Engineers to manage AI workflows securely.
+
+**Business Value & Capabilities:**
+- **Human-in-the-Loop (HITL):** A dedicated interface for reviewing flagged, low-confidence agent executions and approving/rejecting them before business processes are impacted.
+- **Workflow Orchestration Visibility:** Visualize trace runs and multi-agent operations natively through the Trace Explorer.
+- **Cost & Feature Management:** Dashboards for tracking the LLM Cost Autopilot and gradually rolling out new AI Feature Flags.
 
 ## Tech Stack
 - **Framework:** React 18 with Vite

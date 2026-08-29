@@ -50,8 +50,8 @@ export const api = {
     const response = await apiClient.get(`/eval-runs/${currentRunId}/diff/${baselineRunId}`);
     return response.data;
   },
-  triggerEvalRun: async (featureId: string) => {
-    const response = await apiClient.post(`/eval/run/${featureId}`);
+  triggerEvalRun: async (featureId: string, evalMode: string = "fast") => {
+    const response = await apiClient.post(`/eval/run/${featureId}?eval_mode=${evalMode}`);
     return response.data;
   },
   getPrompts: async (page: number = 1, size: number = 10, search?: string) => {

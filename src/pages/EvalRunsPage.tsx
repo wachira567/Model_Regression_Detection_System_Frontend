@@ -37,13 +37,13 @@ export default function EvalRunsPage() {
     }
   };
 
-  const handleTriggerRun = async () => {
+  const handleTriggerRun = async (evalMode: string = "fast") => {
     const featureId = window.prompt("Enter feature ID to evaluate (e.g., email_classifier):", "email_classifier");
     if (!featureId) return;
     
     setTriggering(true);
     try {
-      await api.triggerEvalRun(featureId);
+      await api.triggerEvalRun(featureId, evalMode);
       setTimeout(loadRuns, 2000);
       alert(`Started evaluation run for ${featureId}`);
     } catch (e: any) {
@@ -61,10 +61,22 @@ export default function EvalRunsPage() {
           <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Evaluation Runs</h1>
           <p className="text-slate-500 mt-2 text-lg">Monitor model performance across all deployments.</p>
         </div>
-        <Button onClick={handleTriggerRun} disabled={triggering} className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
-          <Play className="h-5 w-5" fill="currentColor" />
-          {triggering ? "Starting Run..." : "Run Evaluation"}
-        </Button>
+        <div className="flex gap-2 w-full sm:w-auto">
+          <select 
+            className="h-12 px-4 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            id="evalModeSelect"
+          >
+            <option value="fast">⚡ Fast Pass (1x Cost)</option>
+            <option value="deep">🧠 Deep Agentic Audit (3x Cost)</option>
+          </select>
+          <Button onClick={() => {
+            const selectEl = document.getElementById("evalModeSelect") as HTMLSelectElement;
+            handleTriggerRun(selectEl.value);
+          }} disabled={triggering} className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+            <Play className="h-5 w-5" fill="currentColor" />
+            {triggering ? "Starting Run..." : "Run Evaluation"}
+          </Button>
+        </div>
       </div>
 
       {/* Summary Cards */}
