@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../contexts/AuthContext';
 import axios from 'axios';
 import { motion, useScroll, useTransform } from 'framer-motion';
-import { Loader2, Mail, KeyRound, Sparkles, Activity, Shield, Zap, ArrowRight } from 'lucide-react';
+import { Loader2, Mail, KeyRound, Sparkles, Activity, Shield, Zap } from 'lucide-react';
 import { Input } from '../components/ui/input';
 import { Button } from '../components/ui/button';
 
