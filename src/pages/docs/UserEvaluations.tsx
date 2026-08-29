@@ -30,6 +30,18 @@ export default function UserEvaluations() {
             <p className="text-sm text-slate-600 mb-0">Choose which Dataset you want to test against, and which Prompt Configuration you want to evaluate.</p>
           </div>
         </div>
+        <div className="flex flex-col md:flex-row gap-6 mb-8">
+          <div className="flex-1 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <PlayCircle className="w-8 h-8 text-emerald-500 mb-4" />
+            <h3 className="font-bold text-slate-900 mb-2">3a. Fast Pass Evaluation</h3>
+            <p className="text-sm text-slate-600 mb-0">A single-pass LLM judge evaluates the response. This is highly cost-effective and runs quickly, perfect for minor PRs.</p>
+          </div>
+          <div className="flex-1 bg-white border border-slate-200 rounded-2xl p-6 shadow-sm">
+            <Search className="w-8 h-8 text-rose-500 mb-4" />
+            <h3 className="font-bold text-slate-900 mb-2">3b. Deep Agentic Audit</h3>
+            <p className="text-sm text-slate-600 mb-0">Deploys a LangGraph swarm consisting of a Factual Critic and a Logical Critic for a rigorous, multi-faceted audit. Ideal for major production releases.</p>
+          </div>
+        </div>
         <p className="text-slate-600 leading-relaxed mb-6">
           Once triggered, the evaluation runs in the background. If your dataset has hundreds of questions, this might take a few minutes as MRDS asks the AI every single question and grades the response.
         </p>

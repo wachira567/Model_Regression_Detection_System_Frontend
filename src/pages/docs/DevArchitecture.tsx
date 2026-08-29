@@ -57,7 +57,11 @@ export default function DevArchitecture() {
               <strong className="text-white">Execute:</strong> For every row in the dataset, it formats the <code>PromptConfig</code> and dispatches concurrent HTTP calls to the target LLM.
             </li>
             <li>
-              <strong className="text-white">Grade:</strong> The responses are fed into an "LLM-as-a-judge" model which assigns a score based on semantic similarity to the expected output.
+              <strong className="text-white">Grade (Smart Hybrid Engine):</strong> The responses are evaluated based on the user's selected mode:
+              <ul className="list-disc pl-5 mt-2 space-y-1">
+                <li><strong className="text-emerald-400">Fast Pass:</strong> A single LLM-as-a-judge assigns a score based on semantic similarity.</li>
+                <li><strong className="text-indigo-400">Deep Agentic Audit:</strong> A LangGraph state machine orchestrates parallel Factual and Logical Critics, synthesizing their scores via a Supervisor node.</li>
+              </ul>
             </li>
             <li>
               <strong className="text-white">Finalize:</strong> The traces are saved to the database, and the <code>EvalRun</code> status is updated to <code>completed</code>.
