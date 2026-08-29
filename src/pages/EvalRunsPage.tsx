@@ -8,6 +8,7 @@ import { Input } from "@/components/ui/input";
 import { ArrowRight, Play, CheckCircle2, XCircle, Clock, Search, Target, Zap, Activity } from "lucide-react";
 import { Pagination } from "@/components/Pagination";
 import { CountUp } from "@/lib/AnimationUtils";
+import { motion } from "framer-motion";
 
 export default function EvalRunsPage() {
   const [runs, setRuns] = useState<any[]>([]);
@@ -54,16 +55,31 @@ export default function EvalRunsPage() {
     }
   };
 
+  const container = {
+    hidden: { opacity: 0 },
+    show: {
+      opacity: 1,
+      transition: {
+        staggerChildren: 0.1
+      }
+    }
+  };
+
+  const item = {
+    hidden: { opacity: 0, y: 20 },
+    show: { opacity: 1, y: 0, transition: { duration: 0.5, ease: "easeOut" } }
+  };
+
   return (
-    <div className="space-y-8 pb-12">
-      <div className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+    <motion.div variants={container} initial="hidden" animate="show" className="space-y-8 pb-12">
+      <motion.div variants={item} className="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
         <div>
-          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900">Evaluation Runs</h1>
+          <h1 className="text-3xl font-extrabold tracking-tight text-slate-900 dark:text-white">Evaluation Runs</h1>
           <p className="text-slate-500 mt-2 text-lg">Monitor model performance across all deployments.</p>
         </div>
         <div className="flex gap-2 w-full sm:w-auto">
           <select 
-            className="h-12 px-4 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm"
+            className="h-12 px-4 bg-white/50 dark:bg-slate-900 border border-slate-200 dark:border-slate-800 rounded-xl text-sm font-semibold text-slate-700 dark:text-slate-200 focus:outline-none focus:ring-2 focus:ring-indigo-500 shadow-sm backdrop-blur-md"
             id="evalModeSelect"
           >
             <option value="fast">⚡ Fast Pass (1x Cost)</option>
@@ -72,78 +88,85 @@ export default function EvalRunsPage() {
           <Button onClick={() => {
             const selectEl = document.getElementById("evalModeSelect") as HTMLSelectElement;
             handleTriggerRun(selectEl.value);
-          }} disabled={triggering} className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-200 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
+          }} disabled={triggering} className="gap-2 h-12 px-6 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-lg shadow-indigo-500/20 transition-all hover:-translate-y-0.5 w-full sm:w-auto">
             <Play className="h-5 w-5" fill="currentColor" />
             {triggering ? "Starting Run..." : "Run Evaluation"}
           </Button>
         </div>
-      </div>
+      </motion.div>
 
       {/* Summary Cards */}
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-        <Card className="border-none shadow-sm bg-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-emerald-500 rounded-full blur-[50px] opacity-10"></div>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-emerald-50 text-emerald-600 rounded-xl">
-                <Target className="h-6 w-6" />
+        <motion.div variants={item}>
+          <Card className="border-none shadow-xl glass-panel relative group overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-emerald-500 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-emerald-500/10 text-emerald-500 rounded-xl">
+                  <Target className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold text-slate-600 dark:text-slate-300">Avg Accuracy</h3>
               </div>
-              <h3 className="font-semibold text-slate-600">Avg Accuracy</h3>
-            </div>
-            <div className="text-4xl font-extrabold text-slate-900"><CountUp end={92} suffix="%" /></div>
-            <p className="text-sm text-emerald-600 font-medium mt-2 flex items-center gap-1">
-              <Activity className="h-4 w-4" /> +2.4% this week
-            </p>
-          </CardContent>
-        </Card>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white"><CountUp end={92} suffix="%" /></div>
+              <p className="text-sm text-emerald-500 font-medium mt-2 flex items-center gap-1">
+                <Activity className="h-4 w-4" /> +2.4% this week
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card className="border-none shadow-sm bg-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-indigo-500 rounded-full blur-[50px] opacity-10"></div>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-indigo-50 text-indigo-600 rounded-xl">
-                <Activity className="h-6 w-6" />
+        <motion.div variants={item}>
+          <Card className="border-none shadow-xl glass-panel relative group overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-indigo-500 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-indigo-500/10 text-indigo-500 rounded-xl">
+                  <Activity className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold text-slate-600 dark:text-slate-300">Total Runs</h3>
               </div>
-              <h3 className="font-semibold text-slate-600">Total Runs</h3>
-            </div>
-            <div className="text-4xl font-extrabold text-slate-900"><CountUp end={total} /></div>
-            <p className="text-sm text-slate-500 font-medium mt-2">Across all models</p>
-          </CardContent>
-        </Card>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white"><CountUp end={total} /></div>
+              <p className="text-sm text-slate-500 dark:text-slate-400 font-medium mt-2">Across all models</p>
+            </CardContent>
+          </Card>
+        </motion.div>
 
-        <Card className="border-none shadow-sm bg-white overflow-hidden relative">
-          <div className="absolute top-0 right-0 w-24 h-24 bg-amber-500 rounded-full blur-[50px] opacity-10"></div>
-          <CardContent className="p-6">
-            <div className="flex items-center gap-4 mb-4">
-              <div className="p-3 bg-amber-50 text-amber-600 rounded-xl">
-                <Zap className="h-6 w-6" />
+        <motion.div variants={item}>
+          <Card className="border-none shadow-xl glass-panel relative group overflow-hidden">
+            <div className="absolute top-0 right-0 w-32 h-32 bg-amber-500 rounded-full blur-[60px] opacity-20 group-hover:opacity-40 transition-opacity duration-500"></div>
+            <CardContent className="p-6 relative z-10">
+              <div className="flex items-center gap-4 mb-4">
+                <div className="p-3 bg-amber-500/10 text-amber-500 rounded-xl">
+                  <Zap className="h-6 w-6" />
+                </div>
+                <h3 className="font-semibold text-slate-600 dark:text-slate-300">Avg Latency</h3>
               </div>
-              <h3 className="font-semibold text-slate-600">Avg Latency</h3>
-            </div>
-            <div className="text-4xl font-extrabold text-slate-900"><CountUp end={245} suffix="ms" /></div>
-            <p className="text-sm text-emerald-600 font-medium mt-2 flex items-center gap-1">
-              <Activity className="h-4 w-4" /> -12ms this week
-            </p>
-          </CardContent>
-        </Card>
+              <div className="text-4xl font-extrabold text-slate-900 dark:text-white"><CountUp end={245} suffix="ms" /></div>
+              <p className="text-sm text-emerald-500 font-medium mt-2 flex items-center gap-1">
+                <Activity className="h-4 w-4" /> -12ms this week
+              </p>
+            </CardContent>
+          </Card>
+        </motion.div>
       </div>
 
-      <Card className="border-none shadow-sm bg-white overflow-hidden">
-        <div className="p-6 border-b border-slate-100 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 bg-slate-50/50">
-          <h2 className="text-lg font-bold text-slate-900">Recent Runs</h2>
-          <div className="relative w-full sm:w-72">
-            <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
-            <Input 
-              placeholder="Search by ID or trigger..." 
-              className="pl-10 h-11 bg-white border-slate-200 rounded-xl focus:ring-indigo-500 focus:border-indigo-500"
-              value={search}
-              onChange={(e) => {
-                setSearch(e.target.value);
-                setPage(1);
-              }}
-            />
+      <motion.div variants={item}>
+        <Card className="border-none shadow-xl glass-panel">
+          <div className="p-6 border-b border-slate-200/50 dark:border-slate-800/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+            <h2 className="text-lg font-bold text-slate-900 dark:text-white">Recent Runs</h2>
+            <div className="relative w-full sm:w-72">
+              <Search className="absolute left-3 top-3 h-5 w-5 text-slate-400" />
+              <Input 
+                placeholder="Search by ID or trigger..." 
+                className="pl-10 h-11 bg-white/50 dark:bg-slate-900 border-slate-200 dark:border-slate-800 rounded-xl focus:ring-indigo-500 focus:border-indigo-500 backdrop-blur-md"
+                value={search}
+                onChange={(e) => {
+                  setSearch(e.target.value);
+                  setPage(1);
+                }}
+              />
+            </div>
           </div>
-        </div>
         <CardContent className="p-0">
           <div className="divide-y divide-slate-100">
             {loading ? (
@@ -219,7 +242,7 @@ export default function EvalRunsPage() {
               ))
             )}
           </div>
-          <div className="p-4 border-t border-slate-100 bg-slate-50/50">
+          <div className="p-4 border-t border-slate-200/50 dark:border-slate-800/50 bg-slate-50/30 dark:bg-slate-900/30 backdrop-blur-md">
             <Pagination 
               page={page} 
               pages={pages} 
@@ -228,7 +251,8 @@ export default function EvalRunsPage() {
             />
           </div>
         </CardContent>
-      </Card>
-    </div>
+        </Card>
+      </motion.div>
+    </motion.div>
   );
 }
